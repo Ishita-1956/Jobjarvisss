@@ -11,7 +11,7 @@ interface WhereYouStandModalProps {
 const audiences = [
     {
         id: 'individuals',
-        title: 'Individual Power',
+        title: 'Job Seeker',
         subtitle: "I'm looking for my next role",
         description: 'Your personal Mission Control center. Let Jarvis apply to hundreds of jobs while you focus on interviews and landing your dream role.',
         href: '/individuals',
@@ -220,9 +220,6 @@ export default function WhereYouStandModal({ isOpen, onClose }: WhereYouStandMod
                                     transition={{ delay: 0.5 }}
                                     className="text-center pb-6 px-8"
                                 >
-                                    <p className="text-slate-500 text-sm">
-                                        Not sure? You can always switch later from your dashboard.
-                                    </p>
                                 </motion.div>
                             </div>
                         </div>

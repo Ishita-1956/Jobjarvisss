@@ -89,8 +89,6 @@ const pricingTiers = [
             'Unlimited team members',
             'Dedicated success manager',
             'Custom integrations',
-            'SLA guarantee',
-            'White-label options',
         ],
     },
 ];
@@ -134,7 +132,7 @@ const faqs: FaqItem[] = [
     { category: 'setup', question: 'Can I pause or stop automation anytime?', answer: 'Yes. You\'re always in control. You can pause, tweak, or stop campaigns whenever you want.' },
     { category: 'setup', question: 'Can I use this for multiple candidates or clients?', answer: 'Yes. Job Jarvis supports recruiter and staffing workflows for managing multiple candidates.' },
     /* Results & Expectations */
-    { category: 'results', question: 'How many jobs can Job Jarvis apply to per day?', answer: '500+' },
+    { category: 'results', question: 'How many jobs can Job Jarvis apply to per month?', answer: '500+' },
     { category: 'results', question: 'When will I start seeing results?', answer: 'Some users see responses within days, others take weeks. Job markets vary by role, location, and profile strength.' },
     { category: 'results', question: 'Does Job Jarvis guarantee a job?', answer: 'No tool can guarantee a job. Job Jarvis maximizes your chances by increasing volume, relevance, and consistency.' },
     /* Pricing & Trust */
@@ -232,61 +230,92 @@ export default function EnterpriseCTA() {
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-violet-500/10 rounded-full blur-[150px]" />
             </div>
 
-            {/* ─── Testimonials ─── */}
-            <div className="relative z-10 mb-10">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-6"
-                >
-                    <span className="text-violet-400 text-sm font-semibold tracking-wider uppercase mb-4 block">
-                        Success Stories
-                    </span>
-                    <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-                        Loved by{' '}
-                        <span className="text-gradient-violet">Staffing Companies</span>
-                    </h2>
-                </motion.div>
+           {/* ─── Testimonials ─── */}
+<div className="relative z-10 mb-10">
+    <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="text-center mb-6"
+    >
+        <span className="text-violet-400 text-sm font-semibold tracking-wider uppercase mb-4 block">
+            Success Stories
+        </span>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {testimonials.map((testimonial, index) => (
-                        <motion.div
-                            key={testimonial.company}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
-                            className="bg-slate-900/50 backdrop-blur-sm border border-slate-800/50 rounded-2xl p-6 hover:border-violet-500/30 transition-all"
+        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+            Loved by{' '}
+            <span className="text-gradient-violet">Staffing Companies</span>
+        </h2>
+    </motion.div>
+
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {testimonials.map((testimonial, index) => (
+            <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-slate-900/50 backdrop-blur-sm border border-slate-800/50 rounded-2xl p-6 hover:border-violet-500/30 transition-all"
+            >
+
+                {/* Company Header */}
+                <div className="flex items-center gap-3 mb-4">
+
+                    {/* Generic Logo */}
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center text-white font-bold">
+
+                        {/* simple icon / number */}
+                        {index + 1}
+
+                    </div>
+
+                    <div>
+                        {/* Blurred Company Name */}
+                        <div className="text-white font-medium blur-sm select-none">
+                            {testimonial.company}
+                        </div>
+
+                        {/* Blurred Industry */}
+                        <div className="text-slate-500 text-sm blur-sm select-none">
+                            {testimonial.industry}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Quote */}
+                <p className="text-slate-300 leading-relaxed mb-4 text-sm">
+                    &ldquo;{testimonial.quote}&rdquo;
+                </p>
+
+                {/* Results */}
+                <div className="grid grid-cols-2 gap-3 mb-4">
+                    {testimonial.results.map((result) => (
+                        <div
+                            key={result.metric}
+                            className="bg-violet-500/10 rounded-lg p-3 text-center"
                         >
-                            <div className="flex items-center gap-3 mb-4">
-                                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center text-white font-bold">
-                                    {testimonial.logo}
-                                </div>
-                                <div>
-                                    <div className="text-white font-medium">{testimonial.company}</div>
-                                    <div className="text-slate-500 text-sm">{testimonial.industry}</div>
-                                </div>
+                            <div className="text-lg font-bold text-violet-400">
+                                {result.value}
                             </div>
-                            <p className="text-slate-300 leading-relaxed mb-4 text-sm">
-                                &ldquo;{testimonial.quote}&rdquo;
-                            </p>
-                            <div className="grid grid-cols-2 gap-3 mb-4">
-                                {testimonial.results.map((result) => (
-                                    <div key={result.metric} className="bg-violet-500/10 rounded-lg p-3 text-center">
-                                        <div className="text-lg font-bold text-violet-400">{result.value}</div>
-                                        <div className="text-slate-500 text-xs">{result.metric}</div>
-                                    </div>
-                                ))}
+
+                            <div className="text-slate-500 text-xs">
+                                {result.metric}
                             </div>
-                            <div className="text-sm">
-                                <span className="text-white">{testimonial.author}</span>
-                                <span className="text-slate-500"> · {testimonial.role}</span>
-                            </div>
-                        </motion.div>
+                        </div>
                     ))}
                 </div>
-            </div>
+
+                {/* Author Info (blurred) */}
+                <div className="text-sm blur-sm select-none">
+                    <span className="text-white">{testimonial.author}</span>
+                    <span className="text-slate-500"> · {testimonial.role}</span>
+                </div>
+
+            </motion.div>
+        ))}
+    </div>
+</div>
 
             {/* ─── Pricing ─── */}
             <motion.div

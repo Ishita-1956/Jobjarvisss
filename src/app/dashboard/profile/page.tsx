@@ -6,8 +6,6 @@ import Link from 'next/link';
 import { getCurrentUser } from '@/lib/auth';
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-
-// Tab definitions
 const tabs = [
     { id: 'resume', label: 'Resume', icon: '📄' },
     { id: 'work-auth', label: 'Work Authorization', icon: '🛂' },
@@ -17,7 +15,6 @@ const tabs = [
     { id: 'account', label: 'Account', icon: '⚙️' },
 ];
 
-// Preset skills
 const presetSkills = [
     'JavaScript', 'TypeScript', 'React', 'Next.js', 'Node.js', 'Python', 'Java', 'C++',
     'AWS', 'Docker', 'Kubernetes', 'Git', 'SQL', 'MongoDB', 'PostgreSQL', 'Redis',
@@ -36,9 +33,7 @@ const employmentTypes = [
     'Full-time', 'Part-time', 'Contract', 'Internship', 'Freelance', 'Temporary',
 ];
 
-const jobTypes = [
-    'On-site', 'Remote', 'Hybrid', 'Flexible',
-];
+const jobTypes = ['On-site', 'Remote', 'Hybrid', 'Flexible'];
 
 const countries = [
     'United States', 'Canada', 'United Kingdom', 'Germany', 'India', 'Australia',
@@ -61,10 +56,10 @@ const experienceYears = [
 ];
 
 const companySizes = [
-    { label: 'Seed: 1 - 10 people', key: 'seed' },
-    { label: 'Small: 11 - 50 people', key: 'small' },
-    { label: 'Medium: 51 - 300 people', key: 'medium' },
-    { label: 'Large: 301+ people', key: 'large' },
+    { label: 'Seed: 1–10', key: 'seed' },
+    { label: 'Small: 11–50', key: 'small' },
+    { label: 'Medium: 51–300', key: 'medium' },
+    { label: 'Large: 301+', key: 'large' },
 ];
 
 const jobFunctions = [
@@ -86,23 +81,17 @@ export default function ProfilePage() {
     const [isSaving, setIsSaving] = useState(false);
     const [candidateId, setCandidateId] = useState<number | null>(null);
 
-    // Form state
     const [formData, setFormData] = useState({
-        // Resume
         resumeFile: null as File | null,
         resumeFileName: '',
         jobTitle: '',
         skills: [] as string[],
         skillInput: '',
-        // Work Auth
         workAuth: '',
         employmentType: '',
-        // Job Prefs
         jobType: [] as string[],
-        // Location
         country: '',
         state: '',
-        // Generic Questions
         firstName: '',
         fullLegalName: '',
         phone: '',
@@ -140,7 +129,6 @@ export default function ProfilePage() {
         previouslyEmployed: '',
         ycAffiliation: '',
         ycHidden: '',
-        // Account
         currentPassword: '',
         newPassword: '',
         confirmPassword: '',
@@ -148,22 +136,17 @@ export default function ProfilePage() {
 
     const handleChange = (field: string, value: string | string[] | File | null) => {
         setFormData((prev) => ({ ...prev, [field]: value }));
-        // Clear error for this field when user types
         if (fieldErrors[field]) {
             setFieldErrors((prev) => { const n = { ...prev }; delete n[field]; return n; });
         }
     };
 
-    // Phone: digits only
     const handlePhoneChange = (value: string) => {
-        const digits = value.replace(/\D/g, '').slice(0, 15);
-        handleChange('phone', digits);
+        handleChange('phone', value.replace(/\D/g, '').slice(0, 15));
     };
 
-    // Zip: digits only
     const handleZipChange = (value: string) => {
-        const digits = value.replace(/\D/g, '').slice(0, 10);
-        handleChange('zip', digits);
+        handleChange('zip', value.replace(/\D/g, '').slice(0, 10));
     };
 
     const handleSkillAdd = () => {
@@ -179,44 +162,29 @@ export default function ProfilePage() {
     };
 
     const handlePresetSkillToggle = (skill: string) => {
-        if (formData.skills.includes(skill)) {
-            handleSkillRemove(skill);
-        } else {
-            handleChange('skills', [...formData.skills, skill]);
-        }
+        if (formData.skills.includes(skill)) handleSkillRemove(skill);
+        else handleChange('skills', [...formData.skills, skill]);
     };
 
     const handleJobTypeToggle = (type: string) => {
-        if (formData.jobType.includes(type)) {
-            handleChange('jobType', formData.jobType.filter((t) => t !== type));
-        } else {
-            handleChange('jobType', [...formData.jobType, type]);
-        }
+        if (formData.jobType.includes(type)) handleChange('jobType', formData.jobType.filter((t) => t !== type));
+        else handleChange('jobType', [...formData.jobType, type]);
     };
 
     const handleCompanySizePref = (key: string, value: string) => {
-        setFormData((prev) => ({
-            ...prev,
-            companySizePrefs: { ...prev.companySizePrefs, [key]: value },
-        }));
+        setFormData((prev) => ({ ...prev, companySizePrefs: { ...prev.companySizePrefs, [key]: value } }));
     };
 
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-        if (file) {
-            handleChange('resumeFile', file);
-            handleChange('resumeFileName', file.name);
-        }
+        if (file) { handleChange('resumeFile', file); handleChange('resumeFileName', file.name); }
     };
 
     const showToast = (message: string, type: 'success' | 'error' = 'success') => {
-        setToastMessage(message);
-        setToastType(type);
-        setShowSaveSuccess(true);
+        setToastMessage(message); setToastType(type); setShowSaveSuccess(true);
         setTimeout(() => setShowSaveSuccess(false), 3000);
     };
 
-    // --- Validation per tab ---
     const validateTab = (tabId: string): Record<string, string> => {
         const errors: Record<string, string> = {};
         switch (tabId) {
@@ -258,11 +226,9 @@ export default function ProfilePage() {
         return errors;
     };
 
-    const isTabComplete = (tabId: string): boolean => {
-        return Object.keys(validateTab(tabId)).length === 0 && savedTabs.has(tabId);
-    };
+    const isTabComplete = (tabId: string): boolean =>
+        Object.keys(validateTab(tabId)).length === 0 && savedTabs.has(tabId);
 
-    // Profile completion %
     const completionPercent = useMemo(() => {
         const tabIds = ['resume', 'work-auth', 'job-prefs', 'location', 'generic'];
         const completed = tabIds.filter((t) => savedTabs.has(t) && Object.keys(validateTab(t)).length === 0).length;
@@ -274,20 +240,11 @@ export default function ProfilePage() {
         const fetchProfile = async () => {
             try {
                 const user = await getCurrentUser();
-                console.log('Current user:', user);
-                if (!user || user.role !== 'jobseeker' || !user.candidate_id) {
-                    setIsLoading(false);
-                    return;
-                }
+                if (!user || user.role !== 'jobseeker' || !user.candidate_id) { setIsLoading(false); return; }
                 setCandidateId(user.candidate_id);
-
-                const res = await fetch(`${API_BASE}/profile/${user.candidate_id}`, {
-                  credentials: 'include'
-                  });
+                const res = await fetch(`${API_BASE}/profile/${user.candidate_id}`, { credentials: 'include' });
                 if (res.ok) {
                     const data = await res.json();
-
-                    // Parse JSON fields safely
                     let gq_links = { linkedin: '', github: '', portfolio: '', other: '' };
                     try { if (data.gq_portfolio_links) gq_links = JSON.parse(data.gq_portfolio_links); } catch (e) { }
                     let gq_comp_size = { seed: '', small: '', medium: '', large: '' };
@@ -305,8 +262,6 @@ export default function ProfilePage() {
                         resumeFileName: data.resume_path ? data.resume_path.split('/').pop() : '',
                         education: data.education || data.gq_highest_education || '',
                         phone: data.phone || '',
-
-                        // Map Generic Questions Fields
                         firstName: data.gq_preferred_first_name || '',
                         fullLegalName: data.gq_full_legal_name || '',
                         address: data.gq_address || '',
@@ -337,7 +292,7 @@ export default function ProfilePage() {
                         companySizePrefs: gq_comp_size,
                         gender: data.gq_gender || '',
                         race: data.gq_race || '',
-                        veteranStatus: data.gq_veteran_status || ''
+                        veteranStatus: data.gq_veteran_status || '',
                     }));
 
                     const completed = new Set<string>();
@@ -364,12 +319,7 @@ export default function ProfilePage() {
             return;
         }
         setFieldErrors({});
-
-        if (!candidateId) {
-            showToast('Unable to save: Profile not loaded completely', 'error');
-            return;
-        }
-
+        if (!candidateId) { showToast('Unable to save: Profile not loaded completely', 'error'); return; }
         setIsSaving(true);
         const submitData = new FormData();
         submitData.append('candidate_id', candidateId.toString());
@@ -428,17 +378,10 @@ export default function ProfilePage() {
                 submitData.append('race', formData.race);
                 submitData.append('veteran_status', formData.veteranStatus);
             }
-
-            const res = await fetch(endpoint, {
-                method: 'POST',
-                credentials: 'include',
-                body: submitData
-            });
-
+            const res = await fetch(endpoint, { method: 'POST', credentials: 'include', body: submitData });
             if (res.ok) {
                 setSavedTabs((prev) => new Set(prev).add(activeTab));
-                const tabLabel = tabs.find((t) => t.id === activeTab)?.label || 'Profile';
-                showToast(`${tabLabel} updated successfully!`);
+                showToast(`${tabs.find((t) => t.id === activeTab)?.label || 'Profile'} updated successfully!`);
             } else {
                 const err = await res.json();
                 showToast(err.error || 'Failed to update profile', 'error');
@@ -458,7 +401,6 @@ export default function ProfilePage() {
             return;
         }
         setFieldErrors({});
-
         if (!candidateId) return;
         setIsSaving(true);
         const submitData = new FormData();
@@ -466,13 +408,8 @@ export default function ProfilePage() {
         submitData.append('action', 'update_password');
         submitData.append('current_password', formData.currentPassword);
         submitData.append('new_password', formData.newPassword);
-
         try {
-            const res = await fetch(`${API_BASE}/profile`, {
-                method: 'POST',
-                credentials: 'include',
-                body: submitData
-            });
+            const res = await fetch(`${API_BASE}/profile`, { method: 'POST', credentials: 'include', body: submitData });
             if (res.ok) {
                 showToast('Password updated successfully!');
                 setFormData(prev => ({ ...prev, currentPassword: '', newPassword: '', confirmPassword: '' }));
@@ -487,35 +424,36 @@ export default function ProfilePage() {
         }
     };
 
-    // Helper: mandatory label
+    // ── Shared style tokens (compact) ──
+    const inputClass = "w-full px-2.5 py-1.5 bg-slate-800/50 border border-slate-700/50 focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 rounded-md text-white placeholder-slate-500 text-xs focus:outline-none transition-all";
+    const selectClass = "w-full px-2.5 py-1.5 bg-slate-800/50 border border-slate-700/50 focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 rounded-md text-white text-xs focus:outline-none transition-all appearance-none cursor-pointer";
+    const labelClass = "block text-[11px] font-semibold text-slate-400 mb-1";
+    const sectionClass = "bg-slate-800/40 border border-slate-700/40 rounded-xl p-4 mb-4";
+    const sectionTitleClass = "text-sm font-bold text-white mb-3 flex items-center gap-1.5";
+    const saveBtn = "px-4 py-1.5 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 rounded-lg text-white text-xs font-medium transition-all shadow-md shadow-blue-500/20 disabled:opacity-50 disabled:cursor-not-allowed";
+    const toggleBtn = (active: boolean) =>
+        `px-3 py-1.5 rounded-lg text-xs font-medium border transition-all ${active
+            ? 'bg-blue-500/20 text-blue-300 border-blue-500/40'
+            : 'bg-slate-800/60 text-slate-400 border-slate-700/50 hover:border-slate-600'}`;
+
+    const inputErr = (field: string) => fieldErrors[field]
+        ? "w-full px-2.5 py-1.5 bg-slate-800/50 border border-red-500/60 focus:border-red-400 focus:ring-1 focus:ring-red-500/20 rounded-md text-white placeholder-slate-500 text-xs focus:outline-none transition-all"
+        : inputClass;
+    const selectErr = (field: string) => fieldErrors[field]
+        ? "w-full px-2.5 py-1.5 bg-slate-800/50 border border-red-500/60 focus:border-red-400 focus:ring-1 focus:ring-red-500/20 rounded-md text-white text-xs focus:outline-none transition-all appearance-none cursor-pointer"
+        : selectClass;
+
     const reqLabel = (text: string) => (
         <label className={labelClass}>{text} <span className="text-red-400">*</span></label>
     );
-
-    // Error message renderer
-    const fieldError = (field: string) => fieldErrors[field] ? (
-        <p className="text-red-400 text-xs mt-1">{fieldErrors[field]}</p>
-    ) : null;
-
-    // Error-aware input border
-    const inputErr = (field: string) => fieldErrors[field]
-        ? "w-full px-4 py-3 bg-slate-800/50 border border-red-500/60 focus:border-red-400 focus:ring-2 focus:ring-red-500/20 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none transition-all"
-        : inputClass;
-
-    const selectErr = (field: string) => fieldErrors[field]
-        ? "w-full px-4 py-3 bg-slate-800/50 border border-red-500/60 focus:border-red-400 focus:ring-2 focus:ring-red-500/20 rounded-xl text-white text-sm focus:outline-none transition-all appearance-none cursor-pointer"
-        : selectClass;
-
-    // Shared input classes
-    const inputClass = "w-full px-4 py-3 bg-slate-800/50 border border-slate-700/50 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none transition-all";
-    const selectClass = "w-full px-4 py-3 bg-slate-800/50 border border-slate-700/50 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 rounded-xl text-white text-sm focus:outline-none transition-all appearance-none cursor-pointer";
-    const labelClass = "block text-sm font-medium text-slate-300 mb-2";
-    const sectionTitleClass = "text-lg font-semibold text-white mb-4 flex items-center gap-2";
+    const fieldError = (field: string) => fieldErrors[field]
+        ? <p className="text-red-400 text-[10px] mt-0.5">{fieldErrors[field]}</p>
+        : null;
 
     if (isLoading) {
         return (
-            <div className="flex items-center justify-center min-h-[500px]">
-                <div className="w-8 h-8 rounded-full border-4 border-slate-700/50 border-t-blue-500 animate-spin"></div>
+            <div className="flex items-center justify-center min-h-[400px]">
+                <div className="w-6 h-6 rounded-full border-2 border-slate-700/50 border-t-blue-500 animate-spin" />
             </div>
         );
     }
@@ -526,52 +464,48 @@ export default function ProfilePage() {
             <AnimatePresence>
                 {showSaveSuccess && (
                     <motion.div
-                        initial={{ opacity: 0, y: -50, scale: 0.9 }}
+                        initial={{ opacity: 0, y: -40, scale: 0.9 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -50, scale: 0.9 }}
+                        exit={{ opacity: 0, y: -40, scale: 0.9 }}
                         transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                        className={`fixed top-4 left-1/2 -translate-x-1/2 z-[100] px-6 py-3 text-white rounded-xl shadow-2xl flex items-center gap-3 ${toastType === 'error'
-                            ? 'bg-gradient-to-r from-red-500 to-rose-500 shadow-red-500/25'
-                            : 'bg-gradient-to-r from-green-500 to-emerald-500 shadow-green-500/25'
-                            }`}
+                        className={`fixed top-3 left-1/2 -translate-x-1/2 z-[100] px-4 py-2 text-white rounded-lg shadow-xl flex items-center gap-2 text-sm ${toastType === 'error'
+                            ? 'bg-gradient-to-r from-red-500 to-rose-500'
+                            : 'bg-gradient-to-r from-green-500 to-emerald-500'}`}
                     >
-                        <span className="text-xl">{toastType === 'error' ? '⚠️' : '✅'}</span>
+                        <span>{toastType === 'error' ? '⚠️' : '✅'}</span>
                         <span className="font-medium">{toastMessage}</span>
                     </motion.div>
                 )}
             </AnimatePresence>
 
-
-
-            {/* Main Content */}
-            <div className="w-full max-w-6xl mx-auto py-4 sm:py-6">
-                {/* Back to Dashboard */}
-                <Link
-                    href="/dashboard"
-                    className="inline-flex items-center gap-2 mb-4 px-4 py-2 text-slate-400 hover:text-white transition-colors rounded-xl hover:bg-slate-800/50 text-sm"
+            <div className="w-full max-w-5xl mx-auto py-3 px-3">
+                {/* Back */}
+                <Link href="/dashboard"
+                    className="inline-flex items-center gap-1.5 mb-3 px-3 py-1.5 text-slate-400 hover:text-white transition-colors rounded-lg hover:bg-slate-800/50 text-xs"
                 >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                     Back to Dashboard
                 </Link>
 
-                <div className="flex flex-col lg:flex-row gap-6">
-                    {/* Left Sidebar - Tabs */}
+                <div className="flex flex-col lg:flex-row gap-4">
+                    {/* ── Sidebar ── */}
                     <motion.div
-                        initial={{ opacity: 0, x: -20 }}
+                        initial={{ opacity: 0, x: -16 }}
                         animate={{ opacity: 1, x: 0 }}
-                        className="lg:w-64 flex-shrink-0"
+                        className="lg:w-52 flex-shrink-0"
                     >
-                        <div className="lg:sticky lg:top-24">
-                            <h2 className="text-xl font-bold text-white mb-2">Profile Settings</h2>
-                            {/* Progress Bar */}
-                            <div className="mb-6">
-                                <div className="flex items-center justify-between mb-1.5">
-                                    <span className="text-xs text-slate-400">Profile Completion</span>
-                                    <span className={`text-xs font-semibold ${completionPercent === 100 ? 'text-green-400' : 'text-blue-400'}`}>{completionPercent}%</span>
+                        <div className="lg:sticky lg:top-20">
+                            <h2 className="text-base font-bold text-white mb-2">Profile Settings</h2>
+
+                            {/* Progress */}
+                            <div className="mb-4">
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-[10px] text-slate-400">Completion</span>
+                                    <span className={`text-[10px] font-semibold ${completionPercent === 100 ? 'text-green-400' : 'text-blue-400'}`}>{completionPercent}%</span>
                                 </div>
-                                <div className="w-full h-2 bg-slate-800/80 rounded-full overflow-hidden">
+                                <div className="w-full h-1.5 bg-slate-800/80 rounded-full overflow-hidden">
                                     <motion.div
                                         initial={{ width: 0 }}
                                         animate={{ width: `${completionPercent}%` }}
@@ -580,155 +514,115 @@ export default function ProfilePage() {
                                     />
                                 </div>
                             </div>
-                            <nav className="space-y-1">
-                                {tabs.map((tab) => {
-                                    const complete = isTabComplete(tab.id);
-                                    return (
-                                        <motion.button
-                                            key={tab.id}
-                                            whileHover={{ x: 4 }}
-                                            whileTap={{ scale: 0.98 }}
-                                            onClick={() => { setFieldErrors({}); setActiveTab(tab.id); }}
-                                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${activeTab === tab.id
-                                                ? 'bg-gradient-to-r from-blue-500/20 via-cyan-500/10 to-transparent text-white border-l-2 border-blue-400'
-                                                : 'text-slate-400 hover:text-white hover:bg-slate-800/30'
-                                                }`}
-                                        >
-                                            <span className="text-base">{tab.icon}</span>
-                                            <span className="flex-1 text-left">{tab.label}</span>
-                                            {complete && <span className="text-green-400 text-sm">✓</span>}
-                                        </motion.button>
-                                    );
-                                })}
+
+                            <nav className="space-y-0.5">
+                                {tabs.map((tab) => (
+                                    <motion.button
+                                        key={tab.id}
+                                        whileHover={{ x: 3 }}
+                                        whileTap={{ scale: 0.98 }}
+                                        onClick={() => { setFieldErrors({}); setActiveTab(tab.id); }}
+                                        className={`w-full flex items-center gap-2 px-2.5 py-2 rounded-lg text-xs font-medium transition-all ${activeTab === tab.id
+                                            ? 'bg-gradient-to-r from-blue-500/20 via-cyan-500/10 to-transparent text-white border-l-2 border-blue-400'
+                                            : 'text-slate-400 hover:text-white hover:bg-slate-800/30'}`}
+                                    >
+                                        <span className="text-sm">{tab.icon}</span>
+                                        <span className="flex-1 text-left">{tab.label}</span>
+                                        {isTabComplete(tab.id) && <span className="text-green-400 text-xs">✓</span>}
+                                    </motion.button>
+                                ))}
                             </nav>
                         </div>
                     </motion.div>
 
-                    {/* Right Content */}
+                    {/* ── Main Content ── */}
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 16 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="flex-1 min-w-0 overflow-y-auto"
+                        className="flex-1 min-w-0"
                     >
                         <AnimatePresence mode="wait">
-                            {/* ==================== RESUME TAB ==================== */}
-                            {activeTab === 'resume' && (
-                                <motion.div
-                                    key="resume"
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -20 }}
-                                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                                    className="space-y-8"
-                                >
-                                    {/* Resume Upload */}
-                                    <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
-                                        <h3 className={sectionTitleClass}>📄 Resume</h3>
-                                        <p className="text-slate-400 text-sm mb-6">Your resume is the first impression—make it count! Upload a PDF or DOCX file under 5MB.</p>
 
-                                        <input
-                                            ref={fileInputRef}
-                                            type="file"
-                                            accept=".pdf,.docx"
-                                            onChange={handleFileUpload}
-                                            className="hidden"
-                                        />
+                            {/* ══ RESUME ══ */}
+                            {activeTab === 'resume' && (
+                                <motion.div key="resume"
+                                    initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -16 }}
+                                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                                >
+                                    <div className={sectionClass}>
+                                        <h3 className={sectionTitleClass}>📄 Resume Upload</h3>
+                                        <p className="text-slate-500 text-[11px] mb-3">Upload a PDF or DOCX file under 5MB.</p>
+
+                                        <input ref={fileInputRef} type="file" accept=".pdf,.docx" onChange={handleFileUpload} className="hidden" />
 
                                         {formData.resumeFileName ? (
-                                            <div className="flex items-center gap-4 p-4 bg-green-500/10 border border-green-500/20 rounded-xl mb-4">
-                                                <div className="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center text-lg">📎</div>
-                                                <div className="flex-1">
-                                                    <p className="text-white font-medium text-sm">{formData.resumeFileName}</p>
-                                                    <p className="text-green-400 text-xs">Uploaded successfully</p>
+                                            <div className="flex items-center gap-3 p-2.5 bg-green-500/10 border border-green-500/20 rounded-lg mb-3">
+                                                <div className="w-7 h-7 rounded-md bg-green-500/20 flex items-center justify-center text-sm">📎</div>
+                                                <div className="flex-1 min-w-0">
+                                                    <p className="text-white font-medium text-xs truncate">{formData.resumeFileName}</p>
+                                                    <p className="text-green-400 text-[10px]">Uploaded</p>
                                                 </div>
-                                                <button
-                                                    onClick={() => { handleChange('resumeFile', null); handleChange('resumeFileName', ''); }}
-                                                    className="text-slate-400 hover:text-red-400 transition-colors"
-                                                >
-                                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <button onClick={() => { handleChange('resumeFile', null); handleChange('resumeFileName', ''); }}
+                                                    className="text-slate-400 hover:text-red-400 transition-colors flex-shrink-0">
+                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                                     </svg>
                                                 </button>
                                             </div>
                                         ) : (
-                                            <p className="text-slate-500 text-sm mb-4">No file chosen</p>
+                                            <p className="text-slate-500 text-xs mb-3">No file chosen</p>
                                         )}
+                                        {fieldError('resumeFileName')}
 
-                                        <div className="flex gap-3">
-                                            <button
-                                                onClick={() => fileInputRef.current?.click()}
-                                                className="px-5 py-2.5 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 rounded-xl text-white text-sm font-medium transition-all shadow-lg shadow-blue-500/25"
-                                            >
-                                                Upload Resume
-                                            </button>
+                                        <div className="flex gap-2">
+                                            <button onClick={() => fileInputRef.current?.click()} className={saveBtn}>Upload Resume</button>
                                             {formData.resumeFileName && (
-                                                <button className="px-5 py-2.5 bg-slate-800/80 border border-slate-700/50 hover:border-slate-600 rounded-xl text-white text-sm font-medium transition-all">
-                                                    View Resume
+                                                <button className="px-4 py-1.5 bg-slate-800/80 border border-slate-700/50 hover:border-slate-600 rounded-lg text-white text-xs font-medium transition-all">
+                                                    View
                                                 </button>
                                             )}
                                         </div>
                                     </div>
 
-                                    {/* Job Role & Skills */}
-                                    <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
-                                        <h3 className={sectionTitleClass}>💼 Add Job Role & Skills</h3>
-
-                                        <div className="space-y-6">
+                                    <div className={sectionClass}>
+                                        <h3 className={sectionTitleClass}>💼 Job Role & Skills</h3>
+                                        <div className="space-y-4">
                                             <div>
                                                 {reqLabel('Professional Title / Job Role')}
-                                                <input
-                                                    type="text"
-                                                    value={formData.jobTitle}
-                                                    onChange={(e) => handleChange('jobTitle', e.target.value)}
-                                                    placeholder="e.g. Software Engineer"
-                                                    className={inputErr('jobTitle')}
-                                                />
+                                                <input type="text" value={formData.jobTitle} onChange={(e) => handleChange('jobTitle', e.target.value)}
+                                                    placeholder="e.g. Software Engineer" className={inputErr('jobTitle')} />
                                                 {fieldError('jobTitle')}
                                             </div>
 
                                             <div>
                                                 {reqLabel('Key Skills')}
                                                 {fieldError('skills')}
-                                                <div className="flex gap-2 mb-3">
-                                                    <input
-                                                        type="text"
-                                                        value={formData.skillInput}
+                                                <div className="flex gap-2 mb-2">
+                                                    <input type="text" value={formData.skillInput}
                                                         onChange={(e) => handleChange('skillInput', e.target.value)}
                                                         onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleSkillAdd())}
-                                                        placeholder="Type a skill & press Enter"
-                                                        className={inputClass}
-                                                    />
+                                                        placeholder="Type a skill & press Enter" className={inputClass} />
                                                 </div>
 
-                                                {/* Selected Skills */}
                                                 {formData.skills.length > 0 && (
-                                                    <div className="flex flex-wrap gap-2 mb-4">
+                                                    <div className="flex flex-wrap gap-1.5 mb-3">
                                                         {formData.skills.map((skill) => (
-                                                            <motion.span
-                                                                key={skill}
-                                                                initial={{ scale: 0 }}
-                                                                animate={{ scale: 1 }}
-                                                                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-500/20 text-blue-300 rounded-lg text-sm border border-blue-500/30"
-                                                            >
+                                                            <motion.span key={skill} initial={{ scale: 0 }} animate={{ scale: 1 }}
+                                                                className="inline-flex items-center gap-1 px-2 py-1 bg-blue-500/20 text-blue-300 rounded-md text-[11px] border border-blue-500/30">
                                                                 {skill}
-                                                                <button onClick={() => handleSkillRemove(skill)} className="hover:text-red-400 transition-colors">×</button>
+                                                                <button onClick={() => handleSkillRemove(skill)} className="hover:text-red-400 transition-colors leading-none">×</button>
                                                             </motion.span>
                                                         ))}
                                                     </div>
                                                 )}
 
-                                                {/* Preset Skills */}
-                                                <p className="text-xs text-slate-500 mb-2">Popular skills:</p>
-                                                <div className="flex flex-wrap gap-2">
+                                                <p className="text-[10px] text-slate-500 mb-1.5">Popular skills:</p>
+                                                <div className="flex flex-wrap gap-1.5">
                                                     {presetSkills.slice(0, 20).map((skill) => (
-                                                        <button
-                                                            key={skill}
-                                                            onClick={() => handlePresetSkillToggle(skill)}
-                                                            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${formData.skills.includes(skill)
-                                                                ? 'bg-blue-500/30 text-blue-300 border border-blue-500/40'
-                                                                : 'bg-slate-800/60 text-slate-400 border border-slate-700/50 hover:border-slate-600'
-                                                                }`}
-                                                        >
+                                                        <button key={skill} onClick={() => handlePresetSkillToggle(skill)}
+                                                            className={`px-2 py-1 rounded-md text-[11px] font-medium transition-all border ${formData.skills.includes(skill)
+                                                                ? 'bg-blue-500/30 text-blue-300 border-blue-500/40'
+                                                                : 'bg-slate-800/60 text-slate-400 border-slate-700/50 hover:border-slate-600'}`}>
                                                             {skill}
                                                         </button>
                                                     ))}
@@ -736,28 +630,22 @@ export default function ProfilePage() {
                                             </div>
                                         </div>
 
-                                        <div className="mt-6 flex justify-end">
-                                            <button onClick={handleSave} disabled={isSaving} className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 rounded-xl text-white text-sm font-medium transition-all shadow-lg shadow-blue-500/25 disabled:opacity-50 disabled:cursor-not-allowed">
-                                                Save Resume
-                                            </button>
+                                        <div className="mt-4 flex justify-end">
+                                            <button onClick={handleSave} disabled={isSaving} className={saveBtn}>Save Resume</button>
                                         </div>
                                     </div>
                                 </motion.div>
                             )}
 
-                            {/* ==================== WORK AUTH TAB ==================== */}
+                            {/* ══ WORK AUTH ══ */}
                             {activeTab === 'work-auth' && (
-                                <motion.div
-                                    key="work-auth"
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -20 }}
+                                <motion.div key="work-auth"
+                                    initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -16 }}
                                     transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                                 >
-                                    <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
+                                    <div className={sectionClass}>
                                         <h3 className={sectionTitleClass}>🛂 Work Authorization</h3>
-
-                                        <div className="space-y-6">
+                                        <div className="space-y-4">
                                             <div>
                                                 {reqLabel('Work Authorization')}
                                                 <select value={formData.workAuth} onChange={(e) => handleChange('workAuth', e.target.value)} className={selectErr('workAuth')}>
@@ -766,7 +654,6 @@ export default function ProfilePage() {
                                                 </select>
                                                 {fieldError('workAuth')}
                                             </div>
-
                                             <div>
                                                 {reqLabel('Employment Type')}
                                                 <select value={formData.employmentType} onChange={(e) => handleChange('employmentType', e.target.value)} className={selectErr('employmentType')}>
@@ -776,69 +663,51 @@ export default function ProfilePage() {
                                                 {fieldError('employmentType')}
                                             </div>
                                         </div>
-
-                                        <div className="mt-6 flex justify-end gap-3">
-                                            <button onClick={handleSave} disabled={isSaving} className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 rounded-xl text-white text-sm font-medium transition-all shadow-lg shadow-blue-500/25 disabled:opacity-50 disabled:cursor-not-allowed">
-                                                Save
-                                            </button>
+                                        <div className="mt-4 flex justify-end">
+                                            <button onClick={handleSave} disabled={isSaving} className={saveBtn}>Save</button>
                                         </div>
                                     </div>
                                 </motion.div>
                             )}
 
-                            {/* ==================== JOB PREFS TAB ==================== */}
+                            {/* ══ JOB PREFS ══ */}
                             {activeTab === 'job-prefs' && (
-                                <motion.div
-                                    key="job-prefs"
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -20 }}
+                                <motion.div key="job-prefs"
+                                    initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -16 }}
                                     transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                                 >
-                                    <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
+                                    <div className={sectionClass}>
                                         <h3 className={sectionTitleClass}>💼 Job Preferences</h3>
-
                                         <div>
                                             {reqLabel('Job Types')}
                                             {fieldError('jobType')}
-                                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                                                 {jobTypes.map((type) => (
-                                                    <button
-                                                        key={type}
-                                                        onClick={() => handleJobTypeToggle(type)}
-                                                        className={`px-4 py-3 rounded-xl text-sm font-medium transition-all border ${formData.jobType.includes(type)
-                                                            ? 'bg-blue-500/20 text-blue-300 border-blue-500/40 shadow-lg shadow-blue-500/10'
-                                                            : 'bg-slate-800/60 text-slate-400 border-slate-700/50 hover:border-slate-600'
-                                                            }`}
-                                                    >
+                                                    <button key={type} onClick={() => handleJobTypeToggle(type)}
+                                                        className={`px-3 py-2 rounded-lg text-xs font-medium transition-all border ${formData.jobType.includes(type)
+                                                            ? 'bg-blue-500/20 text-blue-300 border-blue-500/40 shadow-sm shadow-blue-500/10'
+                                                            : 'bg-slate-800/60 text-slate-400 border-slate-700/50 hover:border-slate-600'}`}>
                                                         {type}
                                                     </button>
                                                 ))}
                                             </div>
                                         </div>
-
-                                        <div className="mt-6 flex justify-end">
-                                            <button onClick={handleSave} disabled={isSaving} className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 rounded-xl text-white text-sm font-medium transition-all shadow-lg shadow-blue-500/25 disabled:opacity-50 disabled:cursor-not-allowed">
-                                                Save Preferences
-                                            </button>
+                                        <div className="mt-4 flex justify-end">
+                                            <button onClick={handleSave} disabled={isSaving} className={saveBtn}>Save Preferences</button>
                                         </div>
                                     </div>
                                 </motion.div>
                             )}
 
-                            {/* ==================== LOCATION TAB ==================== */}
+                            {/* ══ LOCATION ══ */}
                             {activeTab === 'location' && (
-                                <motion.div
-                                    key="location"
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -20 }}
+                                <motion.div key="location"
+                                    initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -16 }}
                                     transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                                 >
-                                    <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
+                                    <div className={sectionClass}>
                                         <h3 className={sectionTitleClass}>📍 Preferred Location</h3>
-
-                                        <div className="space-y-6">
+                                        <div className="space-y-4">
                                             <div>
                                                 {reqLabel('Preferred Country/Region')}
                                                 <select value={formData.country} onChange={(e) => handleChange('country', e.target.value)} className={selectErr('country')}>
@@ -847,7 +716,6 @@ export default function ProfilePage() {
                                                 </select>
                                                 {fieldError('country')}
                                             </div>
-
                                             <div>
                                                 {reqLabel('State / Region')}
                                                 <select value={formData.state} onChange={(e) => handleChange('state', e.target.value)} className={selectErr('state')}>
@@ -857,37 +725,31 @@ export default function ProfilePage() {
                                                 {fieldError('state')}
                                             </div>
                                         </div>
-
-                                        <div className="mt-6 flex justify-end gap-3">
-                                            <button onClick={handleSave} disabled={isSaving} className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 rounded-xl text-white text-sm font-medium transition-all shadow-lg shadow-blue-500/25 disabled:opacity-50 disabled:cursor-not-allowed">
-                                                Save
-                                            </button>
+                                        <div className="mt-4 flex justify-end">
+                                            <button onClick={handleSave} disabled={isSaving} className={saveBtn}>Save</button>
                                         </div>
                                     </div>
                                 </motion.div>
                             )}
 
-                            {/* ==================== GENERIC QUESTIONS TAB ==================== */}
+                            {/* ══ GENERIC QUESTIONS ══ */}
                             {activeTab === 'generic' && (
-                                <motion.div
-                                    key="generic"
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -20 }}
+                                <motion.div key="generic"
+                                    initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -16 }}
                                     transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                                    className="space-y-8"
+                                    className="space-y-4"
                                 >
-                                    {/* Personal Information */}
-                                    <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
+                                    {/* Personal Info */}
+                                    <div className={sectionClass}>
                                         <h3 className={sectionTitleClass}>👤 Personal Information</h3>
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                             <div>
                                                 {reqLabel('Preferred First Name')}
                                                 <input type="text" value={formData.firstName} onChange={(e) => handleChange('firstName', e.target.value)} className={inputErr('firstName')} />
                                                 {fieldError('firstName')}
                                             </div>
                                             <div>
-                                                {reqLabel('Full Legal Name (for Offer/Onboarding)')}
+                                                {reqLabel('Full Legal Name')}
                                                 <input type="text" value={formData.fullLegalName} onChange={(e) => handleChange('fullLegalName', e.target.value)} className={inputErr('fullLegalName')} />
                                                 {fieldError('fullLegalName')}
                                             </div>
@@ -929,21 +791,17 @@ export default function ProfilePage() {
                                         </div>
                                     </div>
 
-                                    {/* Application Documents & Links */}
-                                    <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
-                                        <h3 className={sectionTitleClass}>📎 Application Documents & Links</h3>
-                                        <div className="space-y-6">
+                                    {/* Documents & Links */}
+                                    <div className={sectionClass}>
+                                        <h3 className={sectionTitleClass}>📎 Documents & Links</h3>
+                                        <div className="space-y-3">
                                             <div>
                                                 <label className={labelClass}>Cover Letter</label>
-                                                <textarea
-                                                    value={formData.coverLetter}
-                                                    onChange={(e) => handleChange('coverLetter', e.target.value)}
-                                                    placeholder="Paste your cover letter here..."
-                                                    rows={4}
-                                                    className={`${inputClass} resize-none`}
-                                                />
+                                                <textarea value={formData.coverLetter} onChange={(e) => handleChange('coverLetter', e.target.value)}
+                                                    placeholder="Paste your cover letter here..." rows={3}
+                                                    className={`${inputClass} resize-none`} />
                                             </div>
-                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                                 <div>
                                                     <label className={labelClass}>LinkedIn URL</label>
                                                     <input type="url" value={formData.linkedinUrl} onChange={(e) => handleChange('linkedinUrl', e.target.value)} className={inputClass} />
@@ -961,19 +819,19 @@ export default function ProfilePage() {
                                                     <input type="url" value={formData.otherUrl} onChange={(e) => handleChange('otherUrl', e.target.value)} className={inputClass} />
                                                 </div>
                                             </div>
-                                            <div>
+                                            <div className="sm:w-1/2">
                                                 <label className={labelClass}>Portfolio Password (if applicable)</label>
                                                 <input type="password" value={formData.portfolioPassword} onChange={(e) => handleChange('portfolioPassword', e.target.value)} className={inputClass} />
                                             </div>
                                         </div>
                                     </div>
 
-                                    {/* Role & Career Preferences */}
-                                    <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
-                                        <h3 className={sectionTitleClass}>🎯 Role & Career Preferences</h3>
-                                        <div className="space-y-6">
+                                    {/* Career Preferences */}
+                                    <div className={sectionClass}>
+                                        <h3 className={sectionTitleClass}>🎯 Career Preferences</h3>
+                                        <div className="space-y-4">
                                             <div>
-                                                <label className={labelClass}>What job function best fits what you&apos;re looking for?</label>
+                                                <label className={labelClass}>Job function</label>
                                                 <select value={formData.jobFunction} onChange={(e) => handleChange('jobFunction', e.target.value)} className={selectClass}>
                                                     <option value="">Select a function...</option>
                                                     {jobFunctions.map((f) => <option key={f} value={f}>{f}</option>)}
@@ -981,43 +839,37 @@ export default function ProfilePage() {
                                             </div>
 
                                             <div>
-                                                <label className={labelClass}>Are you willing to relocate?</label>
-                                                <div className="flex gap-3">
+                                                <label className={labelClass}>Willing to relocate?</label>
+                                                <div className="flex gap-2">
                                                     {['Yes', 'No'].map((opt) => (
-                                                        <button key={opt} onClick={() => handleChange('willingToRelocate', opt)}
-                                                            className={`px-5 py-2.5 rounded-xl text-sm font-medium border transition-all ${formData.willingToRelocate === opt
-                                                                ? 'bg-blue-500/20 text-blue-300 border-blue-500/40' : 'bg-slate-800/60 text-slate-400 border-slate-700/50 hover:border-slate-600'}`}
-                                                        >{opt}</button>
+                                                        <button key={opt} onClick={() => handleChange('willingToRelocate', opt)} className={toggleBtn(formData.willingToRelocate === opt)}>{opt}</button>
                                                     ))}
                                                 </div>
                                             </div>
 
-                                            {/* Company Size Preferences */}
+                                            {/* Company Size Table */}
                                             <div>
-                                                <label className={labelClass}>What size company would you like to work at?</label>
+                                                <label className={labelClass}>Preferred company size</label>
                                                 <div className="overflow-x-auto">
-                                                    <table className="w-full text-sm">
+                                                    <table className="w-full text-xs">
                                                         <thead>
                                                             <tr className="text-slate-400">
-                                                                <th className="text-left py-2 pr-4 font-medium"></th>
-                                                                <th className="py-2 px-3 font-medium text-green-400">Preferred</th>
-                                                                <th className="py-2 px-3 font-medium text-yellow-400">OK</th>
-                                                                <th className="py-2 px-3 font-medium text-red-400">Not Interested</th>
+                                                                <th className="text-left py-1.5 pr-3 font-medium w-28"></th>
+                                                                <th className="py-1.5 px-2 font-medium text-green-400">Preferred</th>
+                                                                <th className="py-1.5 px-2 font-medium text-yellow-400">OK</th>
+                                                                <th className="py-1.5 px-2 font-medium text-red-400">No</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             {companySizes.map((size) => (
                                                                 <tr key={size.key} className="border-t border-slate-800/50">
-                                                                    <td className="py-3 pr-4 text-slate-300 text-xs sm:text-sm">{size.label}</td>
+                                                                    <td className="py-2 pr-3 text-slate-300 text-[11px]">{size.label}</td>
                                                                     {['preferred', 'ok', 'not-interested'].map((pref) => (
-                                                                        <td key={pref} className="py-3 px-3 text-center">
-                                                                            <button
-                                                                                onClick={() => handleCompanySizePref(size.key, pref)}
-                                                                                className={`w-5 h-5 rounded-full border-2 transition-all ${formData.companySizePrefs[size.key] === pref
-                                                                                    ? 'bg-blue-500 border-blue-400 shadow-lg shadow-blue-500/30'
-                                                                                    : 'border-slate-600 hover:border-slate-400'
-                                                                                    }`}
-                                                                            />
+                                                                        <td key={pref} className="py-2 px-2 text-center">
+                                                                            <button onClick={() => handleCompanySizePref(size.key, pref)}
+                                                                                className={`w-4 h-4 rounded-full border-2 transition-all ${formData.companySizePrefs[size.key] === pref
+                                                                                    ? 'bg-blue-500 border-blue-400'
+                                                                                    : 'border-slate-600 hover:border-slate-400'}`} />
                                                                         </td>
                                                                     ))}
                                                                 </tr>
@@ -1029,63 +881,69 @@ export default function ProfilePage() {
 
                                             {/* Equity */}
                                             <div>
-                                                <label className={labelClass}>How much do you value equity as part of an overall compensation package?</label>
-                                                <div className="space-y-2">
+                                                <label className={labelClass}>Equity preference</label>
+                                                <div className="space-y-1.5">
                                                     {[
                                                         "I'm not that interested in startup equity; I'd prefer a cash-heavy package",
                                                         "I'd be interested in getting some equity at a promising company",
                                                         "Equity is very important to me",
                                                     ].map((opt) => (
                                                         <button key={opt} onClick={() => handleChange('equityPreference', opt)}
-                                                            className={`w-full text-left px-4 py-3 rounded-xl text-sm border transition-all ${formData.equityPreference === opt
-                                                                ? 'bg-blue-500/15 text-blue-300 border-blue-500/40' : 'bg-slate-800/40 text-slate-400 border-slate-700/50 hover:border-slate-600'}`}
-                                                        >{opt}</button>
+                                                            className={`w-full text-left px-3 py-2 rounded-lg text-xs border transition-all ${formData.equityPreference === opt
+                                                                ? 'bg-blue-500/15 text-blue-300 border-blue-500/40'
+                                                                : 'bg-slate-800/40 text-slate-400 border-slate-700/50 hover:border-slate-600'}`}>
+                                                            {opt}
+                                                        </button>
                                                     ))}
                                                 </div>
                                             </div>
 
                                             {/* Salary */}
                                             <div>
-                                                <label className={labelClass}>Do you have a minimum salary requirement?</label>
-                                                <div className="space-y-2">
+                                                <label className={labelClass}>Salary requirement</label>
+                                                <div className="space-y-1.5">
                                                     {[
                                                         "Yes, I'm only interested in salaries at or above my minimum",
                                                         "I have a minimum in mind, but would consider offers below it for the right company",
                                                         "I'm flexible, or not sure what my requirements are yet",
                                                     ].map((opt) => (
                                                         <button key={opt} onClick={() => handleChange('salaryRequirement', opt)}
-                                                            className={`w-full text-left px-4 py-3 rounded-xl text-sm border transition-all ${formData.salaryRequirement === opt
-                                                                ? 'bg-blue-500/15 text-blue-300 border-blue-500/40' : 'bg-slate-800/40 text-slate-400 border-slate-700/50 hover:border-slate-600'}`}
-                                                        >{opt}</button>
+                                                            className={`w-full text-left px-3 py-2 rounded-lg text-xs border transition-all ${formData.salaryRequirement === opt
+                                                                ? 'bg-blue-500/15 text-blue-300 border-blue-500/40'
+                                                                : 'bg-slate-800/40 text-slate-400 border-slate-700/50 hover:border-slate-600'}`}>
+                                                            {opt}
+                                                        </button>
                                                     ))}
                                                 </div>
                                             </div>
 
-                                            {/* Job Search Status */}
+                                            {/* Search Status */}
                                             <div>
-                                                <label className={labelClass}>What is your job search status?</label>
-                                                <div className="space-y-2">
+                                                <label className={labelClass}>Job search status</label>
+                                                <div className="space-y-1.5">
                                                     {[
                                                         "I'm actively looking for a job",
                                                         "I'm open to new opportunities",
                                                         "I'm not looking / not ready. HIDE MY PROFILE.",
                                                     ].map((opt) => (
                                                         <button key={opt} onClick={() => handleChange('jobSearchStatus', opt)}
-                                                            className={`w-full text-left px-4 py-3 rounded-xl text-sm border transition-all ${formData.jobSearchStatus === opt
-                                                                ? 'bg-blue-500/15 text-blue-300 border-blue-500/40' : 'bg-slate-800/40 text-slate-400 border-slate-700/50 hover:border-slate-600'}`}
-                                                        >{opt}</button>
+                                                            className={`w-full text-left px-3 py-2 rounded-lg text-xs border transition-all ${formData.jobSearchStatus === opt
+                                                                ? 'bg-blue-500/15 text-blue-300 border-blue-500/40'
+                                                                : 'bg-slate-800/40 text-slate-400 border-slate-700/50 hover:border-slate-600'}`}>
+                                                            {opt}
+                                                        </button>
                                                     ))}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    {/* Experience & Skills */}
-                                    <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
-                                        <h3 className={sectionTitleClass}>🎓 Experience & Skills</h3>
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    {/* Experience */}
+                                    <div className={sectionClass}>
+                                        <h3 className={sectionTitleClass}>🎓 Experience & Education</h3>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                             <div>
-                                                <label className={labelClass}>Highest Level of Education</label>
+                                                <label className={labelClass}>Highest Education Level</label>
                                                 <select value={formData.education} onChange={(e) => handleChange('education', e.target.value)} className={selectClass}>
                                                     <option value="">Select...</option>
                                                     {educationLevels.map((e) => <option key={e} value={e}>{e}</option>)}
@@ -1099,105 +957,88 @@ export default function ProfilePage() {
                                                 </select>
                                             </div>
                                             <div>
-                                                <label className={labelClass}>Are you a full-time student?</label>
-                                                <div className="flex gap-3">
+                                                <label className={labelClass}>Full-time student?</label>
+                                                <div className="flex gap-2">
                                                     {['Yes', 'No'].map((opt) => (
-                                                        <button key={opt} onClick={() => handleChange('isFullTimeStudent', opt)}
-                                                            className={`px-5 py-2.5 rounded-xl text-sm font-medium border transition-all ${formData.isFullTimeStudent === opt
-                                                                ? 'bg-blue-500/20 text-blue-300 border-blue-500/40' : 'bg-slate-800/60 text-slate-400 border-slate-700/50 hover:border-slate-600'}`}
-                                                        >{opt}</button>
+                                                        <button key={opt} onClick={() => handleChange('isFullTimeStudent', opt)} className={toggleBtn(formData.isFullTimeStudent === opt)}>{opt}</button>
                                                     ))}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    {/* Demographics & Legal */}
-                                    <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
+                                    {/* Demographics */}
+                                    <div className={sectionClass}>
                                         <h3 className={sectionTitleClass}>📋 Demographics & Legal</h3>
-                                        <p className="text-slate-500 text-xs mb-4">This information is voluntary and confidential. It will not impact your job applications.</p>
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                        <p className="text-slate-500 text-[10px] mb-3">Voluntary and confidential — won&apos;t affect applications.</p>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                             <div>
-                                                {reqLabel('Are you 18 years of age or older?')}
+                                                {reqLabel('18 years or older?')}
                                                 {fieldError('isOver18')}
-                                                <div className="flex gap-3">
+                                                <div className="flex gap-2">
                                                     {['Yes', 'No'].map((opt) => (
-                                                        <button key={opt} onClick={() => handleChange('isOver18', opt)}
-                                                            className={`px-5 py-2.5 rounded-xl text-sm font-medium border transition-all ${formData.isOver18 === opt
-                                                                ? 'bg-blue-500/20 text-blue-300 border-blue-500/40' : 'bg-slate-800/60 text-slate-400 border-slate-700/50 hover:border-slate-600'}`}
-                                                        >{opt}</button>
+                                                        <button key={opt} onClick={() => handleChange('isOver18', opt)} className={toggleBtn(formData.isOver18 === opt)}>{opt}</button>
                                                     ))}
                                                 </div>
                                             </div>
                                             <div>
                                                 {reqLabel('Legally authorized to work?')}
                                                 {fieldError('legallyAuthorized')}
-                                                <div className="flex gap-3">
+                                                <div className="flex gap-2">
                                                     {['Yes', 'No'].map((opt) => (
-                                                        <button key={opt} onClick={() => handleChange('legallyAuthorized', opt)}
-                                                            className={`px-5 py-2.5 rounded-xl text-sm font-medium border transition-all ${formData.legallyAuthorized === opt
-                                                                ? 'bg-blue-500/20 text-blue-300 border-blue-500/40' : 'bg-slate-800/60 text-slate-400 border-slate-700/50 hover:border-slate-600'}`}
-                                                        >{opt}</button>
+                                                        <button key={opt} onClick={() => handleChange('legallyAuthorized', opt)} className={toggleBtn(formData.legallyAuthorized === opt)}>{opt}</button>
                                                     ))}
                                                 </div>
                                             </div>
                                             <div>
-                                                <label className={labelClass}>Will you require sponsorship?</label>
-                                                <div className="flex gap-3">
+                                                <label className={labelClass}>Require sponsorship?</label>
+                                                <div className="flex gap-2">
                                                     {['Yes', 'No'].map((opt) => (
-                                                        <button key={opt} onClick={() => handleChange('needSponsorship', opt)}
-                                                            className={`px-5 py-2.5 rounded-xl text-sm font-medium border transition-all ${formData.needSponsorship === opt
-                                                                ? 'bg-blue-500/20 text-blue-300 border-blue-500/40' : 'bg-slate-800/60 text-slate-400 border-slate-700/50 hover:border-slate-600'}`}
-                                                        >{opt}</button>
+                                                        <button key={opt} onClick={() => handleChange('needSponsorship', opt)} className={toggleBtn(formData.needSponsorship === opt)}>{opt}</button>
                                                     ))}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    {/* Share Your Story */}
-                                    <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
-                                        <h3 className={sectionTitleClass}>✨ Share Your Story</h3>
-                                        <div className="space-y-6">
+                                    {/* Story */}
+                                    <div className={sectionClass}>
+                                        <h3 className={sectionTitleClass}>✨ Your Story</h3>
+                                        <div className="space-y-3">
                                             <div>
                                                 <label className={labelClass}>Describe yourself in a short phrase</label>
                                                 <input type="text" value={formData.shortDescription} onChange={(e) => handleChange('shortDescription', e.target.value)}
-                                                    placeholder='e.g., "Machine learning engineer from Twitter"' className={inputClass} />
+                                                    placeholder='e.g., "ML engineer from Twitter"' className={inputClass} />
                                             </div>
                                             <div>
                                                 <label className={labelClass}>What are you looking for in your next role?</label>
                                                 <textarea value={formData.nextRoleDescription} onChange={(e) => handleChange('nextRoleDescription', e.target.value)}
-                                                    placeholder="Technologies, team size, culture, remote policy, etc." rows={3} className={`${inputClass} resize-none`} />
+                                                    placeholder="Technologies, team size, culture, remote policy, etc." rows={2}
+                                                    className={`${inputClass} resize-none`} />
                                             </div>
                                             <div>
-                                                <label className={labelClass}>Describe a project you&apos;re proud of (optional)</label>
+                                                <label className={labelClass}>A project you&apos;re proud of (optional)</label>
                                                 <textarea value={formData.proudProject} onChange={(e) => handleChange('proudProject', e.target.value)}
-                                                    placeholder="Include your contribution and impact" rows={3} className={`${inputClass} resize-none`} />
+                                                    placeholder="Include your contribution and impact" rows={2}
+                                                    className={`${inputClass} resize-none`} />
                                             </div>
                                         </div>
-
-                                        <div className="mt-6 flex justify-end">
-                                            <button onClick={handleSave} disabled={isSaving} className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 rounded-xl text-white text-sm font-medium transition-all shadow-lg shadow-blue-500/25 disabled:opacity-50 disabled:cursor-not-allowed">
-                                                Save Profile
-                                            </button>
+                                        <div className="mt-4 flex justify-end">
+                                            <button onClick={handleSave} disabled={isSaving} className={saveBtn}>Save Profile</button>
                                         </div>
                                     </div>
                                 </motion.div>
                             )}
 
-                            {/* ==================== ACCOUNT TAB ==================== */}
+                            {/* ══ ACCOUNT ══ */}
                             {activeTab === 'account' && (
-                                <motion.div
-                                    key="account"
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -20 }}
+                                <motion.div key="account"
+                                    initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -16 }}
                                     transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                                 >
-                                    <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
+                                    <div className={sectionClass}>
                                         <h3 className={sectionTitleClass}>⚙️ Account Settings</h3>
-
-                                        <div className="space-y-6 max-w-md">
+                                        <div className="space-y-3 max-w-sm">
                                             <div>
                                                 {reqLabel('Current Password')}
                                                 <input type="password" value={formData.currentPassword} onChange={(e) => handleChange('currentPassword', e.target.value)}
@@ -1209,7 +1050,7 @@ export default function ProfilePage() {
                                                 <input type="password" value={formData.newPassword} onChange={(e) => handleChange('newPassword', e.target.value)}
                                                     placeholder="Enter new password" className={inputErr('newPassword')} />
                                                 {fieldError('newPassword')}
-                                                <p className="text-xs text-slate-500 mt-1.5">Must be at least 8 characters, include a number and a special character.</p>
+                                                <p className="text-[10px] text-slate-500 mt-1">Min 8 chars, include a number and a special character.</p>
                                             </div>
                                             <div>
                                                 {reqLabel('Confirm Password')}
@@ -1218,19 +1059,17 @@ export default function ProfilePage() {
                                                 {fieldError('confirmPassword')}
                                             </div>
                                         </div>
-
-                                        <div className="mt-6 flex justify-end">
-                                            <button onClick={handleAccountSave} disabled={isSaving} className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 rounded-xl text-white text-sm font-medium transition-all shadow-lg shadow-blue-500/25 disabled:opacity-50 disabled:cursor-not-allowed">
-                                                Update Password
-                                            </button>
+                                        <div className="mt-4 flex justify-end">
+                                            <button onClick={handleAccountSave} disabled={isSaving} className={saveBtn}>Update Password</button>
                                         </div>
                                     </div>
                                 </motion.div>
                             )}
+
                         </AnimatePresence>
                     </motion.div>
                 </div>
-            </div >
-        </div >
+            </div>
+        </div>
     );
 }

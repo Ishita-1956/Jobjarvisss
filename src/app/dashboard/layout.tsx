@@ -6,6 +6,12 @@ import { getCurrentUser, User } from '@/lib/auth';
 import DashboardSidebar from '@/components/dashboard/DashboardSidebar';
 import EnterpriseSidebar from '@/components/dashboard/EnterpriseSidebar';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
+import { Caveat } from 'next/font/google'
+
+export const handwritten = Caveat({
+  subsets: ['latin'],
+  weight: ['400','500','600'],
+})
 
 export default function DashboardLayout({
     children,

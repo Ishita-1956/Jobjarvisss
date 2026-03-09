@@ -2,9 +2,13 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useState } from 'react';
 import Button from '../Button';
 
 export default function HeroSection() {
+
+    const [isPlaying, setIsPlaying] = useState(false);
+
     const scrollToWhereYouStand = () => {
         const element = document.getElementById('where-you-stand');
         if (element) {
@@ -13,151 +17,166 @@ export default function HeroSection() {
     };
 
     return (
-        <>
-            <section className="relative min-h-[75vh] flex items-center justify-center overflow-hidden pt-24">
-                {/* Static gradient background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
-                <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[120px]" />
-                <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-violet-500/10 rounded-full blur-[100px]" />
+        <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-24">
 
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
-                    <div className="text-center max-w-4xl mx-auto">
-                        <motion.h1
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: 0.1 }}
-                            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6"
-                        >
-                            <span className="text-gradient">10×</span> Your Job Applications.{' '}
-                        </motion.h1>
+            {/* Background */}
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
+            <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[120px]" />
+            <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-violet-500/10 rounded-full blur-[100px]" />
 
-                        <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: 0.2 }}
-                            className="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-10"
-                        >
-                            Job Jarvis analyzes your profile and systematically runs applications, recruiter outreach, and referral helping land interviews
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
 
-                        </motion.p>
+                {/* Hero Text */}
+                <div className="text-center max-w-4xl mx-auto">
 
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: 0.3 }}
-                            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-                        >
-                            <Button
-                                variant="primary"
-                                size="lg"
-                                onClick={scrollToWhereYouStand}
-                                icon={
-                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                    </svg>
-                                }
-                            >
-                                Start Auto-Applying
-                            </Button>
-                            <Link href="/login">
-                                <Button variant="secondary" size="lg">
-                                    See How It Works
-                                </Button>
-                            </Link>
-                        </motion.div>
+                    <motion.h1
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.1 }}
+                        className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6"
+                    >
+                        <span className="text-gradient">10×</span> Your Job Applications.
+                    </motion.h1>
 
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.5, delay: 0.5 }}
-                            className="mt-12 flex flex-wrap items-center justify-center gap-6 text-slate-500 text-sm"
-                        >
-                            <div className="flex items-center gap-2">
-                                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                </svg>
-                                No credit card required
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                </svg>
-                                Cancel anytime
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                </svg>
-                                Full control over applications
-                            </div>
-                        </motion.div>
-                    </div>
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                        className="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-10"
+                    >
+                        Job Jarvis analyzes your profile and systematically runs applications,
+                        recruiter outreach, and referral helping land interviews
+                    </motion.p>
 
                     <motion.div
-                        initial={{ opacity: 0, y: 40 }}
+                        initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.4 }}
-                        className="mt-16 relative"
+                        transition={{ duration: 0.5, delay: 0.3 }}
+                        className="flex flex-col sm:flex-row items-center justify-center gap-4"
                     >
-                        <div className="relative mx-auto max-w-3xl">
-                            {/* Engaging CTA Card */}
-                            <div
-                                onClick={() => {
-                                    const el = document.getElementById('video-demo');
-                                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                                }}
-                                className="relative rounded-2xl overflow-hidden border border-slate-800/50 bg-gradient-to-br from-slate-900/90 to-slate-950/90 backdrop-blur-xl shadow-2xl shadow-blue-500/10 cursor-pointer group hover:border-blue-500/30 transition-all duration-500"
-                            >
-                                <div className="py-10 px-8 flex flex-col items-center text-center">
-                                    {/* Play Icon */}
-                                    <motion.div
-                                        whileHover={{ scale: 1.1 }}
-                                        className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center mb-6 shadow-xl shadow-blue-500/30 group-hover:shadow-blue-500/50 transition-shadow"
-                                    >
-                                        <svg className="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M8 5v14l11-7z" />
-                                        </svg>
-                                    </motion.div>
+                        <Button
+                            variant="primary"
+                            size="lg"
+                            onClick={scrollToWhereYouStand}
+                        >
+                            Start Auto-Applying
+                        </Button>
 
-                                    {/* Headline */}
-                                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
-                                        See It In Action
-                                    </h3>
-                                    <p className="text-slate-400 text-base max-w-lg mb-6">
-                                        Watch how Jarvis automates your entire job search, from profile setup to landing interviews.
-                                    </p>
+                        <Link href="/login">
+                            <Button variant="secondary" size="lg">
+                                See How It Works
+                            </Button>
+                        </Link>
+                    </motion.div>
 
-                                    {/* Scroll indicator */}
-                                    <div className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium group-hover:bg-blue-500/20 group-hover:border-blue-500/40 transition-all">
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                                        </svg>
-                                        Watch How It Works
-                                    </div>
-                                </div>
-                            </div>
+                    {/* Benefits */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                        className="mt-10 flex flex-wrap items-center justify-center gap-6 text-slate-500 text-sm"
+                    >
+                        <div className="flex items-center gap-2">
+                            <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                            Faster Job Search
+                        </div>
 
-                            {/* Glow Effect */}
-                            <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/20 via-violet-500/20 to-cyan-500/20 rounded-3xl blur-3xl -z-10 group-hover:opacity-100 opacity-60 transition-opacity" />
+                        <div className="flex items-center gap-2">
+                            <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                            Flexible Plans
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                            <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                            Application Visibility
                         </div>
                     </motion.div>
+
                 </div>
 
+                {/* Video Demo directly in hero */}
                 <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1 }}
-                    className="absolute bottom-8 left-1/2 -translate-x-1/2"
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.5 }}
+                    className="mt-16 relative"
                 >
-                    <motion.div
-                        animate={{ y: [0, 8, 0] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        className="w-6 h-10 rounded-full border-2 border-slate-700 flex items-start justify-center p-2"
-                    >
-                        <div className="w-1.5 h-3 bg-slate-500 rounded-full" />
-                    </motion.div>
+
+                    {!isPlaying ? (
+
+                        <div
+                            onClick={() => setIsPlaying(true)}
+                            className="relative mx-auto max-w-4xl cursor-pointer group"
+                        >
+
+                            <div className="relative rounded-2xl overflow-hidden border border-slate-800/50 bg-gradient-to-br from-slate-900/90 to-slate-950/90 backdrop-blur-xl shadow-2xl shadow-blue-500/10">
+
+                                <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-800/50">
+                                    <div className="flex gap-2">
+                                        <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                                        <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                                        <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                                    </div>
+                                    <div className="flex-1 text-center text-slate-500 text-sm">
+                                        Job Jarvis — Watch Demo
+                                    </div>
+                                </div>
+
+                                <div className="p-10 text-center text-slate-400">
+                                    Click to watch how Job Jarvis automates your job search.
+                                </div>
+
+                            </div>
+
+                            {/* Play Button */}
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-2xl">
+
+                                <motion.div
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center shadow-2xl shadow-blue-500/40"
+                                >
+                                    <svg className="w-9 h-9 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M8 5v14l11-7z" />
+                                    </svg>
+                                </motion.div>
+
+                            </div>
+
+                        </div>
+
+                    ) : (
+
+                        <div className="relative mx-auto max-w-4xl rounded-2xl overflow-hidden border border-slate-800/50 shadow-2xl shadow-blue-500/10">
+
+                            <iframe
+                                src="https://drive.google.com/file/d/1PmnrAtUZGKwbbyHQ7MwRbrIIf6PSyOyf/preview"
+                                className="w-full aspect-video"
+                                allow="autoplay; fullscreen"
+                                allowFullScreen
+                            />
+
+                            <button
+                                onClick={() => setIsPlaying(false)}
+                                className="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-900/80 text-white flex items-center justify-center hover:bg-slate-800 transition-colors"
+                            >
+                                ✕
+                            </button>
+
+                        </div>
+
+                    )}
+
                 </motion.div>
-            </section>
-        </>
+
+            </div>
+
+        </section>
     );
 }

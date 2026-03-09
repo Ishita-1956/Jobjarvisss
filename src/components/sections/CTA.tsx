@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 
 const benefits = [
-    'Get more interviews (not just more applications)',
+    'Get more interviews',
     'Save hours every week on manual applying',
     'Stop guessing what works—use data instead',
     'Stay consistent without burning out',

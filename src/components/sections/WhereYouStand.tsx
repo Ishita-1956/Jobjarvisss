@@ -6,7 +6,7 @@ import Link from 'next/link';
 const audiences = [
     {
         id: 'individuals',
-        title: 'Individual Power',
+        title: 'Job Seekers',
         subtitle: "I'm looking for my next role",
         description: 'Your personal Mission Control center. Let Jarvis apply to hundreds of jobs while you focus on interviews and landing your dream role.',
         href: '/individuals',
@@ -29,7 +29,7 @@ const audiences = [
     {
         id: 'enterprise',
         title: 'Staffing Companies',
-        subtitle: "I have Bench consultant ,We market them ",
+        subtitle: "I have Bench consultants ,We market them ",
         description: 'Your Command Center for talent. Source, screen, and manage candidates at scale with AI-powered precision.',
         href: '/enterprise',
         icon: (
@@ -233,7 +233,6 @@ export default function WhereYouStand() {
                     transition={{ delay: 0.6 }}
                     className="text-center text-slate-500 text-sm mt-10"
                 >
-                    Not sure? You can always switch later from your dashboard.
                 </motion.p>
             </div>
         </section>
