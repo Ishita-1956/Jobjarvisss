@@ -45,7 +45,6 @@ export function initiateGoogleOAuth(role?: string): void {
 }
 
 
-
 /* =====================================================
    LOGIN WITH EMAIL & PASSWORD
    ===================================================== */

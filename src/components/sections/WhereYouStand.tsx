@@ -8,7 +8,7 @@ const audiences = [
         id: 'individuals',
         title: 'Job Seekers',
         subtitle: "I'm looking for my next role",
-        description: 'Your personal Mission Control center. Let Jarvis apply to hundreds of jobs while you focus on interviews and landing your dream role.',
+        description: 'Your personal Mission Control center. Let Job Jarvis apply to hundreds of jobs while you focus on interviews and landing your dream role.',
         href: '/individuals',
         icon: (
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -52,7 +52,7 @@ const audiences = [
 
 export default function WhereYouStand() {
     return (
-        <section id="where-you-stand" className="relative py-16 md:py-20 overflow-hidden">
+        <section id="where-you-stand" className="relative py-6 md:py-8 overflow-hidden">
             {/* Background */}
             <div className="absolute inset-0 bg-gradient-to-b from-[#050510] via-[#080818] to-[#050510]" />
 
@@ -94,49 +94,48 @@ export default function WhereYouStand() {
                 />
             </div>
 
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
-                {/* Header */}
-                <div className="text-center mb-10">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/10 to-violet-500/10 border border-white/10 text-white/80 text-sm font-medium mb-6"
-                    >
-                        <span className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-400 to-violet-400 animate-pulse" />
-                        Choose Your Path
-                    </motion.div>
+           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl relative z-10">
+    {/* Header */}
+    <div className="text-center mb-5">
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-500/10 to-violet-500/10 border border-white/10 text-white/80 text-xs font-medium mb-3"
+        >
+            <span className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-400 to-violet-400 animate-pulse" />
+            Choose Your Path
+        </motion.div>
 
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.1 }}
-                        className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3"
-                    >
-                        Where Do You{' '}
-                        <span className="relative inline-block">
-                            <span className="text-gradient">Stand</span>
-                            <span className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-violet-500 rounded-full" />
-                        </span>
-                        ?
-                    </motion.h2>
+        <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2"
+        >
+            Get{' '}
+            <span className="text-gradient">
+                Started
+            </span>
+            ?
+        </motion.h2>
 
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                        className="text-slate-400 text-lg max-w-2xl mx-auto"
-                    >
-                        <span className="text-white font-semibold">One engine. Two ways to win.</span>
-                        <br />
-                        Pick your side in the future of hiring.
-                    </motion.p>
-                </div>
+        <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-slate-400 text-sm max-w-2xl mx-auto"
+        >
+            <span className="text-white font-semibold">One engine. Two ways to win.</span>
+            <br />
+            Pick your side in the future of hiring.
+        </motion.p>
+    </div>
 
                 {/* Cards */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-5">
                     {audiences.map((audience, index) => (
                         <Link href={audience.href} key={audience.id}>
                             <motion.div
@@ -155,21 +154,21 @@ export default function WhereYouStand() {
                                     {/* Top Gradient Bar */}
                                     <div className={`h-1.5 bg-gradient-to-r ${audience.gradient}`} />
 
-                                    <div className="p-6">
+                                    <div className="p-4">
                                         {/* Header */}
-                                        <div className="flex items-start justify-between mb-6">
+                                        <div className="flex items-start justify-between mb-3">
                                             <div>
-                                                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${audience.gradient} flex items-center justify-center text-white mb-3 group-hover:scale-110 transition-transform duration-300 shadow-xl`}>
+                                                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${audience.gradient} flex items-center justify-center text-white mb-3 group-hover:scale-110 transition-transform duration-300 shadow-xl`}>
                                                     {audience.icon}
                                                 </div>
-                                                <h3 className="text-xl font-bold text-white mb-1">
+                                                <h3 className="text-lg font-bold text-white mb-1">
                                                     {audience.title}
                                                 </h3>
-                                                <p className="text-slate-400 text-base">
+                                                <p className="text-slate-400 text-sm">
                                                     {audience.subtitle}
                                                 </p>
                                             </div>
-                                            <div className="w-12 h-12 rounded-full bg-slate-800/80 border border-slate-700/50 flex items-center justify-center group-hover:bg-white/10 group-hover:border-white/30 transition-all duration-300">
+                                            <div className="w-10 h-10 rounded-full bg-slate-800/80 border border-slate-700/50 flex items-center justify-center group-hover:bg-white/10 group-hover:border-white/30 transition-all duration-300">
                                                 <svg className="w-5 h-5 text-slate-400 group-hover:text-white group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                                 </svg>
@@ -182,10 +181,10 @@ export default function WhereYouStand() {
                                         </p>
 
                                         {/* Stats */}
-                                        <div className="grid grid-cols-2 gap-3 mb-4">
+                                        <div className="grid grid-cols-2 gap-2 mb-3">
                                             {audience.stats.map((stat) => (
-                                                <div key={stat.label} className="bg-slate-800/50 rounded-lg p-3 border border-slate-700/40 group-hover:border-slate-600/50 transition-colors">
-                                                    <div className={`text-xl font-bold bg-gradient-to-r ${audience.gradient} bg-clip-text text-transparent`}>
+                                                <div key={stat.label} className="bg-slate-800/50 rounded-lg p-2 border border-slate-700/40 group-hover:border-slate-600/50 transition-colors">
+                                                    <div className={`text-lg font-bold bg-gradient-to-r ${audience.gradient} bg-clip-text text-transparent`}>
                                                         {stat.value}
                                                     </div>
                                                     <div className="text-slate-500 text-sm">
@@ -196,7 +195,7 @@ export default function WhereYouStand() {
                                         </div>
 
                                         {/* Features */}
-                                        <div className="space-y-3">
+                                        <div className="space-y-2">
                                             {audience.features.map((feature) => (
                                                 <div key={feature} className="flex items-center gap-3 text-slate-300">
                                                     <div className={`w-5 h-5 rounded-full bg-gradient-to-r ${audience.gradient} flex items-center justify-center`}>
@@ -211,7 +210,7 @@ export default function WhereYouStand() {
                                     </div>
 
                                     {/* CTA Footer */}
-                                    <div className={`px-8 py-4 bg-gradient-to-r ${audience.bgGradient} border-t border-slate-700/30`}>
+                                    <div className={`px-4 py-2 bg-gradient-to-r ${audience.bgGradient} border-t border-slate-700/30`}>
                                         <span className="text-white font-medium flex items-center gap-2">
                                             Get Started
                                             <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -231,7 +230,7 @@ export default function WhereYouStand() {
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.6 }}
-                    className="text-center text-slate-500 text-sm mt-10"
+                    className="text-center text-slate-500 text-sm mt-4"
                 >
                 </motion.p>
             </div>

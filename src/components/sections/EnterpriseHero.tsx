@@ -96,7 +96,7 @@ export default function EnterpriseHero() {
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
-                    className="mt-12 relative"
+                    className="mt-12 mb-16 relative"
                 >
                     <div className="relative mx-auto max-w-4xl">
                         {/* Hierarchy Visualization */}

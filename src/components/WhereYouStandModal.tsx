@@ -13,7 +13,7 @@ const audiences = [
         id: 'individuals',
         title: 'Job Seeker',
         subtitle: "I'm looking for my next role",
-        description: 'Your personal Mission Control center. Let Jarvis apply to hundreds of jobs while you focus on interviews and landing your dream role.',
+        description: 'Your personal Mission Control center. Let Job Jarvis apply to hundreds of jobs while you focus on interviews and landing your dream role.',
         href: '/individuals',
         icon: (
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -104,29 +104,28 @@ export default function WhereYouStandModal({ isOpen, onClose }: WhereYouStandMod
                                     </motion.div>
 
                                     <motion.h2
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.15 }}
-                                        className="text-3xl sm:text-4xl font-bold text-white mb-3"
-                                    >
-                                        Where Do You{' '}
-                                        <span className="relative">
-                                            <span className="text-gradient">Stand</span>
-                                            <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-violet-500 rounded-full" />
-                                        </span>
-                                        ?
-                                    </motion.h2>
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: 0.15 }}
+    className="text-3xl sm:text-4xl font-bold text-white mb-3"
+>
+    Get{' '}
+    <span className="text-gradient">
+        Started
+    </span>
+    ?
+</motion.h2>
 
-                                    <motion.p
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.2 }}
-                                        className="text-slate-400 text-lg max-w-xl mx-auto"
-                                    >
-                                        <span className="text-white font-semibold">One engine. Two ways to win.</span>
-                                        <br />
-                                        Pick your side in the future of hiring.
-                                    </motion.p>
+<motion.p
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: 0.2 }}
+    className="text-slate-400 text-lg max-w-xl mx-auto"
+>
+    <span className="text-white font-semibold">One engine. Two ways to win.</span>
+    <br />
+    Pick your side in the future of hiring.
+</motion.p>
                                 </div>
 
                                 {/* Cards */}

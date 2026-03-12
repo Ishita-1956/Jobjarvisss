@@ -39,54 +39,27 @@ function JobCard({ job, index }: { job: Job; index: number }) {
             transition={{ duration: 0.3, delay: index * 0.05 }}
             className="group relative"
         >
-            <div className="relative bg-slate-900/40 backdrop-blur-md border border-slate-800/50 rounded-xl p-4 transition-all duration-300 hover:border-blue-500/30">
-                <div className="flex items-start gap-4">
+            <div className="relative bg-slate-900/40 backdrop-blur-md border border-slate-800/50 rounded-xl px-4 py-3 transition-all duration-300 hover:border-blue-500/30">
+                <div className="flex items-center gap-3">
                     {/* Logo */}
-                    <div className="w-12 h-12 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform">
+                    <div className="w-10 h-10 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform">
                         {job.logo}
                     </div>
 
+                    {/* Title & Company */}
                     <div className="flex-1 min-w-0">
-                        {/* Title & Match */}
-                        <div className="flex items-start justify-between gap-2 mb-2">
-                            <div className="min-w-0">
-                                <h3 className="text-base font-bold text-white group-hover:text-blue-400 transition-colors truncate">
-                                    {job.title}
-                                </h3>
-                                <p className="text-slate-400 text-sm font-medium truncate">{job.company}</p>
-                            </div>
-                            <div className="flex flex-col items-end shrink-0">
-                                <span className={`px-2 py-1 rounded text-xs font-bold border ${job.match >= 90 ? 'bg-green-500/10 text-green-400 border-green-500/20' : 'bg-blue-500/10 text-blue-400 border-blue-500/20'}`}>
-                                    {job.match}% MATCH
-                                </span>
-                                <span className="text-slate-500 text-xs mt-1">{job.posted}</span>
-                            </div>
-                        </div>
+                        <h3 className="text-sm font-bold text-white group-hover:text-blue-400 transition-colors truncate">
+                            {job.title}
+                        </h3>
+                        <p className="text-slate-400 text-xs font-medium truncate">{job.company}</p>
+                    </div>
 
-                        {/* Location & Type */}
-                        <div className="flex flex-wrap items-center gap-3 text-sm text-slate-400 mb-3">
-                            <span className="flex items-center gap-1">📍 {job.location}</span>
-                            <span className="flex items-center gap-1">💼 {job.type}</span>
-                        </div>
-
-                        {/* Footer Actions */}
-                        <div className="flex items-center justify-between pt-3 border-t border-slate-800/50">
-                            <div className="flex gap-2">
-                                {job.tags.slice(0, 2).map(tag => (
-                                    <span key={tag} className="px-2 py-1 rounded bg-slate-800/50 text-slate-500 text-xs uppercase tracking-wider border border-slate-700/30">
-                                        {tag}
-                                    </span>
-                                ))}
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <button className="text-sm font-bold text-slate-400 hover:text-white transition-colors">
-                                    Details
-                                </button>
-                                <button className="px-4 py-2 rounded-lg text-sm font-bold text-white bg-slate-800 border border-slate-700 hover:bg-slate-700 transition-all">
-                                    Apply on Site
-                                </button>
-                            </div>
-                        </div>
+                    {/* Match & Time */}
+                    <div className="flex flex-col items-end shrink-0">
+                        <span className={`px-2 py-0.5 rounded text-[11px] font-bold border ${job.match >= 90 ? 'bg-green-500/10 text-green-400 border-green-500/20' : 'bg-blue-500/10 text-blue-400 border-blue-500/20'}`}>
+                            {job.match}% MATCH
+                        </span>
+                        <span className="text-slate-500 text-[11px] mt-0.5">{job.posted}</span>
                     </div>
                 </div>
             </div>

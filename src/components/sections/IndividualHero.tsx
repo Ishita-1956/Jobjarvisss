@@ -2,12 +2,15 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useState } from 'react';
 import Button from '../Button';
 import AnimatedBackground from '../AnimatedBackground';
 
 export default function IndividualHero() {
+    const [isPlaying, setIsPlaying] = useState(false);
+
     return (
-        <section className="relative min-h-[75vh] flex items-center justify-center overflow-hidden pt-24">
+        <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-24">
             <AnimatedBackground />
 
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
@@ -52,7 +55,7 @@ export default function IndividualHero() {
                                 Start Trial
                             </Button>
                         </Link>
-                        <Button variant="secondary" size="lg">
+                        <Button variant="secondary" size="lg" onClick={() => setIsPlaying(true)}>
                             Watch Demo
                         </Button>
                     </motion.div>
@@ -62,7 +65,7 @@ export default function IndividualHero() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.5, delay: 0.5 }}
-                        className="mt-12 flex flex-wrap items-center justify-center gap-6 text-slate-500 text-sm"
+                        className="mt-10 flex flex-wrap items-center justify-center gap-6 text-slate-500 text-sm"
                     >
                         <div className="flex items-center gap-2">
                             <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -85,71 +88,133 @@ export default function IndividualHero() {
                     </motion.div>
                 </div>
 
-                {/* Engaging Video CTA */}
+                {/* Video Demo with Dashboard Thumbnail */}
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                    className="mt-16 relative"
+                    transition={{ duration: 0.8, delay: 0.5 }}
+                    className="mt-12 mb-16 relative"
                 >
-                    <div className="relative mx-auto max-w-3xl">
+                    {!isPlaying ? (
                         <div
-                            onClick={() => {
-                                const el = document.getElementById('individual-video-demo');
-                                if (el) el.scrollIntoView({ behavior: 'smooth' });
-                            }}
-                            className="relative rounded-2xl overflow-hidden border border-slate-800/50 bg-gradient-to-br from-slate-900/90 to-slate-950/90 backdrop-blur-xl shadow-2xl shadow-blue-500/10 cursor-pointer group hover:border-cyan-500/30 transition-all duration-500"
+                            onClick={() => setIsPlaying(true)}
+                            className="relative mx-auto max-w-5xl cursor-pointer group"
                         >
-                            <div className="py-10 px-8 flex flex-col items-center text-center">
-                                {/* Play Icon */}
+                            {/* Full Mac-style dashboard thumbnail */}
+                            <div className="relative rounded-2xl overflow-hidden border border-slate-800/50 bg-gradient-to-br from-slate-900/90 to-slate-950/90 backdrop-blur-xl shadow-2xl shadow-blue-500/10">
+                                {/* Mac top bar */}
+                                <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-800/50">
+                                    <div className="flex gap-2">
+                                        <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                                        <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                                        <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                                    </div>
+                                    <div className="flex-1 text-center text-slate-500 text-sm">Job Jarvis — Watch Demo</div>
+                                </div>
+
+                                {/* Dashboard content */}
+                                <div className="p-6">
+                                    {/* Stats row */}
+                                    <div className="grid grid-cols-4 gap-4 mb-4">
+                                        <div className="bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-xl p-3 border border-blue-500/20">
+                                            <div className="text-slate-400 text-xs mb-1">Today</div>
+                                            <div className="text-xl font-bold text-white">47</div>
+                                            <div className="text-green-400 text-xs mt-1">+12 new</div>
+                                        </div>
+                                        <div className="bg-slate-800/50 rounded-xl p-3 border border-slate-700/50">
+                                            <div className="text-slate-400 text-xs mb-1">Total</div>
+                                            <div className="text-xl font-bold text-white">892</div>
+                                            <div className="text-slate-500 text-xs mt-1">All time</div>
+                                        </div>
+                                        <div className="bg-slate-800/50 rounded-xl p-3 border border-slate-700/50">
+                                            <div className="text-slate-400 text-xs mb-1">Interviews</div>
+                                            <div className="text-xl font-bold text-white">23</div>
+                                            <div className="text-green-400 text-xs mt-1">+5 this week</div>
+                                        </div>
+                                        <div className="bg-slate-800/50 rounded-xl p-3 border border-slate-700/50">
+                                            <div className="text-slate-400 text-xs mb-1">Rate</div>
+                                            <div className="text-xl font-bold text-gradient-blue">8.2%</div>
+                                            <div className="text-slate-500 text-xs mt-1">Above avg</div>
+                                        </div>
+                                    </div>
+
+                                    {/* Recent Applications feed */}
+                                    <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
+                                        <div className="flex items-center justify-between mb-3">
+                                            <div className="text-white font-medium text-sm">Recent Applications</div>
+                                            <div className="flex items-center gap-2 text-green-400 text-xs">
+                                                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                                                Jarvis is working
+                                            </div>
+                                        </div>
+                                        <div className="space-y-2">
+                                            {[
+                                                { company: 'Google', role: 'Senior Frontend Engineer', status: 'Applied', time: '2m ago' },
+                                                { company: 'Stripe', role: 'Full Stack Developer', status: 'Applied', time: '15m ago' },
+                                                { company: 'Notion', role: 'React Developer', status: 'Interview Scheduled!', time: '1h ago' },
+                                            ].map((job, i) => (
+                                                <div key={i} className="flex items-center justify-between py-2 border-b border-slate-700/30 last:border-0">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold ${i === 0 ? 'bg-gradient-to-br from-blue-500 to-cyan-500' : 'bg-slate-700/50'}`}>
+                                                            {job.company[0]}
+                                                        </div>
+                                                        <div>
+                                                            <div className="text-white text-sm">{job.role}</div>
+                                                            <div className="text-slate-500 text-xs">{job.company}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="text-right">
+                                                        <div className={`text-xs ${job.status.includes('Interview') ? 'text-green-400' : 'text-blue-400'}`}>{job.status}</div>
+                                                        <div className="text-slate-600 text-xs">{job.time}</div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Play button overlay */}
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-2xl group-hover:bg-black/40 transition-all">
                                 <motion.div
                                     whileHover={{ scale: 1.1 }}
-                                    className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center mb-6 shadow-xl shadow-cyan-500/30 group-hover:shadow-cyan-500/50 transition-shadow"
+                                    whileTap={{ scale: 0.95 }}
+                                    className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-2xl shadow-cyan-500/40"
                                 >
-                                    <svg className="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-9 h-9 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M8 5v14l11-7z" />
                                     </svg>
                                 </motion.div>
-
-                                {/* Headline */}
-                                <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
-                                    See It In Action
-                                </h3>
-                                <p className="text-slate-400 text-base max-w-lg mb-6">
-                                    Watch how Jarvis finds, matches, and applies to jobs for you , and you can focus on what matters most.
-                                </p>
-
-                                {/* Scroll indicator */}
-                                <div className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium group-hover:bg-cyan-500/20 group-hover:border-cyan-500/40 transition-all">
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                                    </svg>
-                                    Watch How It Works
-                                </div>
                             </div>
-                        </div>
 
-                        {/* Glow Effect */}
-                        <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/20 via-cyan-500/20 to-blue-500/20 rounded-3xl blur-3xl -z-10 opacity-60" />
-                    </div>
+                            {/* Label */}
+                            <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
+                                <span className="px-5 py-2 rounded-full bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 text-sm font-medium backdrop-blur-md">
+                                    ▶ Watch How It Works
+                                </span>
+                            </div>
+
+                            <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/20 via-cyan-500/20 to-blue-500/20 rounded-3xl blur-3xl -z-10" />
+                        </div>
+                    ) : (
+                        <div className="relative mx-auto max-w-5xl rounded-2xl overflow-hidden border border-slate-800/50 shadow-2xl shadow-blue-500/10">
+                            <iframe
+                                src="https://drive.google.com/file/d/1Shexg6j4W9tK6HkpA1D4J3oAdRmNRj-b/preview"
+                                className="w-full aspect-video"
+                                allow="autoplay; fullscreen"
+                                allowFullScreen
+                            />
+                            <button
+                                onClick={() => setIsPlaying(false)}
+                                className="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-900/80 text-white flex items-center justify-center hover:bg-slate-800 transition-colors text-lg"
+                            >
+                                ✕
+                            </button>
+                            <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/20 via-cyan-500/20 to-blue-500/20 rounded-3xl blur-3xl -z-10" />
+                        </div>
+                    )}
                 </motion.div>
             </div>
-
-            {/* Scroll Indicator */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1 }}
-                className="absolute bottom-8 left-1/2 -translate-x-1/2"
-            >
-                <motion.div
-                    animate={{ y: [0, 8, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="w-6 h-10 rounded-full border-2 border-slate-700 flex items-start justify-center p-2"
-                >
-                    <div className="w-1.5 h-3 bg-slate-500 rounded-full" />
-                </motion.div>
-            </motion.div>
         </section>
     );
 }

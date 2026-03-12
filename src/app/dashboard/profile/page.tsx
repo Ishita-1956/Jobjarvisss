@@ -478,7 +478,7 @@ export default function ProfilePage() {
                 )}
             </AnimatePresence>
 
-            <div className="w-full max-w-5xl mx-auto py-3 px-3">
+            <div className="w-full max-w-4xl mx-auto py-3 px-3">
                 {/* Back */}
                 <Link href="/dashboard"
                     className="inline-flex items-center gap-1.5 mb-3 px-3 py-1.5 text-slate-400 hover:text-white transition-colors rounded-lg hover:bg-slate-800/50 text-xs"
@@ -494,7 +494,7 @@ export default function ProfilePage() {
                     <motion.div
                         initial={{ opacity: 0, x: -16 }}
                         animate={{ opacity: 1, x: 0 }}
-                        className="lg:w-52 flex-shrink-0"
+                        className="lg:w-44 flex-shrink-0"
                     >
                         <div className="lg:sticky lg:top-20">
                             <h2 className="text-base font-bold text-white mb-2">Profile Settings</h2>

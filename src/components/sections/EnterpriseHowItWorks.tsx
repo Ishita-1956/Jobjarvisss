@@ -218,8 +218,8 @@ export default function EnterpriseHowItWorks() {
                             </svg>
                         </div>
                         <div>
-                            <div className="text-white font-medium text-sm">AI-Matched Jobs</div>
-                            <div className="text-slate-500 text-xs">500+ daily applications</div>
+                            <div className="text-white font-medium text-sm">Applied Jobs</div>
+                            <div className="text-slate-500 text-xs">500+ monthly applications</div>
                         </div>
                     </motion.div>
                 </div>

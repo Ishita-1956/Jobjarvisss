@@ -46,7 +46,7 @@ const features = [
         gradient: 'from-fuchsia-500 to-purple-500',
     },
     {
-        title: 'AI Job Matching',
+        title: 'Fast Job Matching',
         description: 'Candidates get the same powerful AI-powered job matching experience. Automated applications, interview prep, and smart recommendations.',
         icon: (
             <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -9,7 +9,7 @@ const audiences = [
         id: 'individuals',
         title: 'Job Seekers',
         subtitle: 'I\'m looking for my next role',
-        description: 'Let Jarvis apply to hundreds of jobs while you focus on what matters—preparing for interviews and landing your dream job.',
+        description: 'Let Job Jarvis apply to hundreds of jobs while you focus on what matters—preparing for interviews and landing your dream job.',
         href: '/individuals',
         icon: (
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -73,9 +73,9 @@ export default function AudienceSelector() {
                     transition={{ delay: 0.1 }}
                     className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4"
                 >
-                    Where Do You{' '}
+                    Get{' '}
                     <span className="relative">
-                        <span className="text-gradient">Stand</span>
+                        <span className="text-gradient">Started</span>
                         <span className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-violet-500 rounded-full" />
                     </span>
                     ?
@@ -88,7 +88,7 @@ export default function AudienceSelector() {
                     transition={{ delay: 0.2 }}
                     className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto"
                 >
-                    Pick your side in the future of hiring. Whether you&apos;re seeking opportunities or building teams, Jarvis has you covered.
+                    Pick your side in the future of hiring. Whether you&apos;re seeking opportunities or building teams, Job Jarvis has you covered.
                 </motion.p>
             </div>
 

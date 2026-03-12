@@ -1,7 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import SectionWrapper from '../SectionWrapper';
+import Button from '../Button';
 
 const testimonials = [
     {
@@ -9,7 +11,7 @@ const testimonials = [
         role: 'Software Engineer',
         company: 'Now at Google',
         image: null,
-        quote: 'I was spending 4-5 hours a day on applications. With Jarvis, I got 3x more interviews in half the time. Landed my dream job at Google!',
+        quote: 'I was spending 4-5 hours a day on applications. With Job Jarvis, I got 3x more interviews in half the time. Landed my dream job at Google!',
         result: '892 applications → 47 interviews',
     },
     {
@@ -25,7 +27,7 @@ const testimonials = [
         role: 'UX Designer',
         company: 'Now at Figma',
         image: null,
-        quote: 'I was skeptical at first, but Jarvis found opportunities I would have never discovered on my own. Game changer.',
+        quote: 'I was skeptical at first, but Job Jarvis found opportunities I would have never discovered on my own. Game changer.',
         result: '312 applications → 19 interviews',
     },
 ];
@@ -38,6 +40,19 @@ const benefits = [
     'Feel in control of your job search again',
 ];
 
+const jobSeekerPlan = {
+    name: 'Job Seeker',
+    price: '$99',
+    credits: '1 Credit',
+    description: 'For individual job seekers',
+    features: [
+        'Advanced analytics',
+        'Priority support',
+        'Recruiter outreach',
+        'Referral campaigns',
+    ],
+};
+
 export default function IndividualCTA() {
     return (
         <SectionWrapper className="relative overflow-hidden">
@@ -48,57 +63,136 @@ export default function IndividualCTA() {
             </div>
 
             {/* Testimonials */}
-            <div className="relative z-10 mb-16">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-10"
-                >
+<div className="relative z-10 mb-16">
+    <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="text-center mb-10"
+    >
+        <span className="text-blue-400 text-sm font-semibold tracking-wider uppercase mb-4 block">
+            Success Stories
+        </span>
+        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+            Join Thousands of{' '}
+            <span className="text-gradient-blue">Successful Job Seekers</span>
+        </h2>
+    </motion.div>
+
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+        {testimonials.map((testimonial, index) => (
+            <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-slate-900/50 backdrop-blur-sm border border-slate-800/50 rounded-2xl p-6 hover:border-blue-500/30 transition-all h-full flex flex-col justify-between"
+            >
+                {/* Quote */}
+                <p className="text-slate-300 leading-relaxed mb-6">
+                    &ldquo;{testimonial.quote}&rdquo;
+                </p>
+
+                <div className="mt-auto">
+                    {/* Result Badge */}
+                    <div className="inline-block px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-sm mb-4">
+                        {testimonial.result}
+                    </div>
+
+                    {/* Author */}
+                    <div className="flex items-center gap-3">
+                        {/* Avatar Number */}
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center text-white font-bold">
+                            {index + 1}
+                        </div>
+
+                        <div>
+                            {/* Blurred Name */}
+                            <div className="text-white font-medium blur-sm select-none">
+                                {testimonial.name}
+                            </div>
+
+                            <div className="text-slate-400 text-sm">
+                                {testimonial.role}
+                            </div>
+
+                            <div className="text-blue-400 text-sm">
+                                {testimonial.company}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
+        ))}
+    </div>
+</div>
+
+            {/* ─── Pricing ─── */}
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="relative z-10 mb-16"
+            >
+                <div className="text-center mb-8">
                     <span className="text-blue-400 text-sm font-semibold tracking-wider uppercase mb-4 block">
-                        Success Stories
+                         Pricing
                     </span>
                     <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
-                        Join Thousands of{' '}
-                        <span className="text-gradient-blue">Successful Job Seekers</span>
+                        Start Your{' '}
+                        <span className="text-gradient-blue">Job Search</span>
                     </h2>
-                </motion.div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {testimonials.map((testimonial, index) => (
-                        <motion.div
-                            key={testimonial.name}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
-                            className="bg-slate-900/50 backdrop-blur-sm border border-slate-800/50 rounded-2xl p-6 hover:border-blue-500/30 transition-all"
-                        >
-                            {/* Quote */}
-                            <p className="text-slate-300 leading-relaxed mb-6">
-                                &ldquo;{testimonial.quote}&rdquo;
-                            </p>
-
-                            {/* Result Badge */}
-                            <div className="inline-block px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-sm mb-4">
-                                {testimonial.result}
-                            </div>
-
-                            {/* Author */}
-                            <div className="flex items-center gap-3">
-                                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center text-white font-bold">
-                                    {testimonial.name.split(' ').map(n => n[0]).join('')}
-                                </div>
-                                <div>
-                                    <div className="text-white font-medium">{testimonial.name}</div>
-                                    <div className="text-slate-400 text-sm">{testimonial.role}</div>
-                                    <div className="text-blue-400 text-sm">{testimonial.company}</div>
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
+                    <p className="text-slate-400 max-w-xl mx-auto">
+                        One simple plan. Everything you need to land your next role.
+                    </p>
                 </div>
-            </div>
+
+                <div className="max-w-md mx-auto">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="relative bg-slate-900/50 backdrop-blur-sm rounded-2xl p-6 border border-blue-500/50 hover:border-blue-500/70 transition-all duration-300 group"
+                    >
+                        {/* Popular badge */}
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-xs font-semibold rounded-full">
+                            For Single Users
+                        </div>
+
+                        <div className="text-center mb-6">
+                            <h3 className="text-xl font-semibold text-white mb-1">{jobSeekerPlan.name}</h3>
+                            <p className="text-slate-500 text-sm mb-4">{jobSeekerPlan.description}</p>
+                            <div className="flex items-baseline justify-center gap-1">
+                                <span className="text-4xl font-bold text-white">{jobSeekerPlan.price}</span>
+                            </div>
+                            <div className="mt-2 inline-block px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-sm font-medium">
+                                {jobSeekerPlan.credits}
+                            </div>
+                        </div>
+
+                        <ul className="space-y-3 mb-6">
+                            {jobSeekerPlan.features.map((feature) => (
+                                <li key={feature} className="flex items-center gap-2 text-slate-400 text-sm">
+                                    <svg className="w-4 h-4 text-blue-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    {feature}
+                                </li>
+                            ))}
+                        </ul>
+
+                        <Link href="/signup/individual" className="w-full">
+                            <Button
+                                variant="primary"
+                                className="w-full !bg-gradient-to-r !from-blue-500 !to-cyan-500"
+                            >
+                                Get Started
+                            </Button>
+                        </Link>
+                    </motion.div>
+                </div>
+            </motion.div>
 
             {/* What Changes Section */}
             <motion.div

@@ -121,7 +121,7 @@ setIndex(prev => (prev-1 + slides.length) % slides.length);
 
 return(
 
-<SectionWrapper id="about" className="relative">
+<SectionWrapper id="about" className="relative !pt-2 md:!pt-3">
 
 {/* glow */}
 <div className="absolute top-1/2 left-1/3 w-[250px] h-[250px] bg-violet-500/5 rounded-full blur-[90px] pointer-events-none"/>

@@ -52,19 +52,6 @@ const testimonials = [
 /* ─── Pricing Tiers ─── */
 const pricingTiers = [
     {
-        name: 'Single User',
-        price: '$99',
-        credits: '1 Credit',
-        description: 'For individual job seekers',
-        features: [
-            '1 credit included',
-            'AI-powered job matching',
-            'Automated applications',
-            'Profile optimization',
-            'Email support',
-        ],
-    },
-    {
         name: 'Team',
         price: '$500',
         credits: '5 Credits',
@@ -230,92 +217,92 @@ export default function EnterpriseCTA() {
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-violet-500/10 rounded-full blur-[150px]" />
             </div>
 
-           {/* ─── Testimonials ─── */}
-<div className="relative z-10 mb-10">
-    <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-center mb-6"
-    >
-        <span className="text-violet-400 text-sm font-semibold tracking-wider uppercase mb-4 block">
-            Success Stories
-        </span>
+            {/* ─── Testimonials ─── */}
+            <div className="relative z-10 mb-10">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="text-center mb-6"
+                >
+                    <span className="text-violet-400 text-sm font-semibold tracking-wider uppercase mb-4 block">
+                        Success Stories
+                    </span>
 
-        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Loved by{' '}
-            <span className="text-gradient-violet">Staffing Companies</span>
-        </h2>
-    </motion.div>
+                    <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+                        Loved by{' '}
+                        <span className="text-gradient-violet">Staffing Companies</span>
+                    </h2>
+                </motion.div>
 
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {testimonials.map((testimonial, index) => (
-            <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-slate-900/50 backdrop-blur-sm border border-slate-800/50 rounded-2xl p-6 hover:border-violet-500/30 transition-all"
-            >
-
-                {/* Company Header */}
-                <div className="flex items-center gap-3 mb-4">
-
-                    {/* Generic Logo */}
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center text-white font-bold">
-
-                        {/* simple icon / number */}
-                        {index + 1}
-
-                    </div>
-
-                    <div>
-                        {/* Blurred Company Name */}
-                        <div className="text-white font-medium blur-sm select-none">
-                            {testimonial.company}
-                        </div>
-
-                        {/* Blurred Industry */}
-                        <div className="text-slate-500 text-sm blur-sm select-none">
-                            {testimonial.industry}
-                        </div>
-                    </div>
-                </div>
-
-                {/* Quote */}
-                <p className="text-slate-300 leading-relaxed mb-4 text-sm">
-                    &ldquo;{testimonial.quote}&rdquo;
-                </p>
-
-                {/* Results */}
-                <div className="grid grid-cols-2 gap-3 mb-4">
-                    {testimonial.results.map((result) => (
-                        <div
-                            key={result.metric}
-                            className="bg-violet-500/10 rounded-lg p-3 text-center"
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {testimonials.map((testimonial, index) => (
+                        <motion.div
+                            key={index}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: index * 0.1 }}
+                            className="bg-slate-900/50 backdrop-blur-sm border border-slate-800/50 rounded-2xl p-6 hover:border-violet-500/30 transition-all"
                         >
-                            <div className="text-lg font-bold text-violet-400">
-                                {result.value}
+
+                            {/* Company Header */}
+                            <div className="flex items-center gap-3 mb-4">
+
+                                {/* Generic Logo */}
+                                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center text-white font-bold">
+
+                                    {/* simple icon / number */}
+                                    {index + 1}
+
+                                </div>
+
+                                <div>
+                                    {/* Blurred Company Name */}
+                                    <div className="text-white font-medium blur-sm select-none">
+                                        {testimonial.company}
+                                    </div>
+
+                                    {/* Blurred Industry */}
+                                    <div className="text-slate-500 text-sm blur-sm select-none">
+                                        {testimonial.industry}
+                                    </div>
+                                </div>
                             </div>
 
-                            <div className="text-slate-500 text-xs">
-                                {result.metric}
+                            {/* Quote */}
+                            <p className="text-slate-300 leading-relaxed mb-4 text-sm">
+                                &ldquo;{testimonial.quote}&rdquo;
+                            </p>
+
+                            {/* Results */}
+                            <div className="grid grid-cols-2 gap-3 mb-4">
+                                {testimonial.results.map((result) => (
+                                    <div
+                                        key={result.metric}
+                                        className="bg-violet-500/10 rounded-lg p-3 text-center"
+                                    >
+                                        <div className="text-lg font-bold text-violet-400">
+                                            {result.value}
+                                        </div>
+
+                                        <div className="text-slate-500 text-xs">
+                                            {result.metric}
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
-                        </div>
+
+                            {/* Author Info (blurred) */}
+                            <div className="text-sm blur-sm select-none">
+                                <span className="text-white">{testimonial.author}</span>
+                                <span className="text-slate-500"> · {testimonial.role}</span>
+                            </div>
+
+                        </motion.div>
                     ))}
                 </div>
-
-                {/* Author Info (blurred) */}
-                <div className="text-sm blur-sm select-none">
-                    <span className="text-white">{testimonial.author}</span>
-                    <span className="text-slate-500"> · {testimonial.role}</span>
-                </div>
-
-            </motion.div>
-        ))}
-    </div>
-</div>
+            </div>
 
             {/* ─── Pricing ─── */}
             <motion.div
@@ -324,20 +311,20 @@ export default function EnterpriseCTA() {
                 viewport={{ once: true }}
                 className="relative z-10 mb-10"
             >
-                <div className="text-center mb-8">
-                    <span className="text-purple-400 text-sm font-semibold tracking-wider uppercase mb-4 block">
-                        Simple Pricing
+                <div className="text-center mb-5">
+                    <span className="text-purple-400 text-xs font-semibold tracking-wider uppercase mb-2 block">
+                        Pricing
                     </span>
-                    <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
                         Plans for Every{' '}
                         <span className="text-gradient-violet">Team Size</span>
                     </h2>
-                    <p className="text-slate-400 max-w-xl mx-auto">
+                    <p className="text-slate-400 text-sm max-w-xl mx-auto">
                         No hidden fees. No per-placement charges. Just straightforward credit-based pricing.
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
                     {pricingTiers.map((tier, index) => (
                         <motion.div
                             key={tier.name}
@@ -345,7 +332,7 @@ export default function EnterpriseCTA() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
-                            className={`relative bg-slate-900/50 backdrop-blur-sm rounded-2xl p-6 border ${tier.popular ? 'border-violet-500/50' : 'border-slate-800/50'} hover:border-violet-500/40 transition-all duration-300 group`}
+                            className={`relative bg-slate-900/50 backdrop-blur-sm rounded-xl p-4 border ${tier.popular ? 'border-violet-500/50' : 'border-slate-800/50'} hover:border-violet-500/40 transition-all duration-300 group`}
                         >
                             {tier.popular && (
                                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-gradient-to-r from-violet-500 to-purple-500 text-white text-xs font-semibold rounded-full">
@@ -353,18 +340,18 @@ export default function EnterpriseCTA() {
                                 </div>
                             )}
 
-                            <div className="text-center mb-6">
-                                <h3 className="text-xl font-semibold text-white mb-1">{tier.name}</h3>
-                                <p className="text-slate-500 text-sm mb-4">{tier.description}</p>
+                            <div className="text-center mb-4">
+                                <h3 className="text-lg font-semibold text-white mb-1">{tier.name}</h3>
+                                <p className="text-slate-500 text-xs mb-3">{tier.description}</p>
                                 <div className="flex items-baseline justify-center gap-1">
-                                    <span className="text-4xl font-bold text-white">{tier.price}</span>
+                                    <span className="text-3xl font-bold text-white">{tier.price}</span>
                                 </div>
-                                <div className="mt-2 inline-block px-3 py-1 rounded-full bg-violet-500/10 text-violet-400 text-sm font-medium">
+                                <div className="mt-1.5 inline-block px-2.5 py-0.5 rounded-full bg-violet-500/10 text-violet-400 text-xs font-medium">
                                     {tier.credits}
                                 </div>
                             </div>
 
-                            <ul className="space-y-3 mb-6">
+                            <ul className="space-y-2 mb-4">
                                 {tier.features.map((feature) => (
                                     <li key={feature} className="flex items-center gap-2 text-slate-400 text-sm">
                                         <svg className="w-4 h-4 text-violet-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -545,7 +532,7 @@ export default function EnterpriseCTA() {
                 viewport={{ once: true }}
                 className="relative z-10"
             >
-                <div className="relative bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/50 rounded-3xl p-8 md:p-12 overflow-hidden">
+                <div className="relative bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/50 rounded-3xl p-6 md:p-8 overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-r from-violet-500/10 via-transparent to-purple-500/10" />
 
                     <div className="relative z-10 text-center max-w-3xl mx-auto">
@@ -553,7 +540,7 @@ export default function EnterpriseCTA() {
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4"
+                            className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3"
                         >
                             Ready to{' '}
                             <span className="text-gradient-violet">Scale</span> Your Staffing Company?
@@ -564,7 +551,7 @@ export default function EnterpriseCTA() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.1 }}
-                            className="text-slate-400 text-lg mb-8 max-w-2xl mx-auto"
+                            className="text-slate-400 text-base mb-6 max-w-2xl mx-auto"
                         >
                             Join hundreds of staffing companies already using Jarvis to manage their teams and place candidates faster.
                         </motion.p>
@@ -574,7 +561,7 @@ export default function EnterpriseCTA() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.2 }}
-                            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+                            className="flex items-center justify-center"
                         >
                             <Link href="/signup/enterprise">
                                 <Button
@@ -590,9 +577,6 @@ export default function EnterpriseCTA() {
                                     Get Started
                                 </Button>
                             </Link>
-                            <Button variant="secondary" size="lg">
-                                Talk to Sales
-                            </Button>
                         </motion.div>
 
                         <motion.p
