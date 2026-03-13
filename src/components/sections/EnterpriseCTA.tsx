@@ -429,7 +429,6 @@ export default function EnterpriseCTA() {
                                 : 'bg-slate-900/50 text-slate-400 border-slate-700/50 hover:border-violet-500/30 hover:text-white'
                                 }`}
                         >
-                            <span className="mr-1.5">{cat.icon}</span>
                             {cat.label}
                         </button>
                     ))}
