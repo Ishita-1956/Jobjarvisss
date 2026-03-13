@@ -428,8 +428,8 @@ export default function ProfilePage() {
     const inputClass = "w-full px-2.5 py-1.5 bg-slate-800/50 border border-slate-700/50 focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 rounded-md text-white placeholder-slate-500 text-xs focus:outline-none transition-all";
     const selectClass = "w-full px-2.5 py-1.5 bg-slate-800/50 border border-slate-700/50 focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 rounded-md text-white text-xs focus:outline-none transition-all appearance-none cursor-pointer";
     const labelClass = "block text-[11px] font-semibold text-slate-400 mb-1";
-    const sectionClass = "bg-slate-800/40 border border-slate-700/40 rounded-xl p-4 mb-4";
-    const sectionTitleClass = "text-sm font-bold text-white mb-3 flex items-center gap-1.5";
+    const sectionClass = "bg-slate-800/40 border border-slate-700/40 rounded-xl p-3 mb-3";
+    const sectionTitleClass = "text-xs font-bold text-white mb-2 flex items-center gap-1.5";
     const saveBtn = "px-4 py-1.5 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 rounded-lg text-white text-xs font-medium transition-all shadow-md shadow-blue-500/20 disabled:opacity-50 disabled:cursor-not-allowed";
     const toggleBtn = (active: boolean) =>
         `px-3 py-1.5 rounded-lg text-xs font-medium border transition-all ${active
@@ -478,7 +478,7 @@ export default function ProfilePage() {
                 )}
             </AnimatePresence>
 
-            <div className="w-full max-w-4xl mx-auto py-3 px-3">
+            <div className="w-full max-w-3xl mx-auto py-2 px-2">
                 {/* Back */}
                 <Link href="/dashboard"
                     className="inline-flex items-center gap-1.5 mb-3 px-3 py-1.5 text-slate-400 hover:text-white transition-colors rounded-lg hover:bg-slate-800/50 text-xs"
@@ -489,15 +489,15 @@ export default function ProfilePage() {
                     Back to Dashboard
                 </Link>
 
-                <div className="flex flex-col lg:flex-row gap-4">
+                <div className="flex flex-col lg:flex-row gap-3 lg:h-[calc(100vh-8rem)]">
                     {/* ── Sidebar ── */}
                     <motion.div
                         initial={{ opacity: 0, x: -16 }}
                         animate={{ opacity: 1, x: 0 }}
-                        className="lg:w-44 flex-shrink-0"
+                        className="lg:w-40 flex-shrink-0 lg:overflow-hidden"
                     >
                         <div className="lg:sticky lg:top-20">
-                            <h2 className="text-base font-bold text-white mb-2">Profile Settings</h2>
+                            <h2 className="text-sm font-bold text-white mb-2">Profile Settings</h2>
 
                             {/* Progress */}
                             <div className="mb-4">
@@ -539,7 +539,8 @@ export default function ProfilePage() {
                     <motion.div
                         initial={{ opacity: 0, y: 16 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="flex-1 min-w-0"
+                        className="flex-1 min-w-0 lg:overflow-y-auto lg:pr-1"
+                        style={{ scrollbarWidth: 'thin', scrollbarColor: '#334155 transparent' }}
                     >
                         <AnimatePresence mode="wait">
 

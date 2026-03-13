@@ -88,26 +88,26 @@ interface FaqItem {
 }
 
 const faqCategories = [
-    { id: 'general', label: 'General', icon: '💡' },
-    { id: 'ai', label: 'AI & Strategy', icon: '🧠' },
-    { id: 'safety', label: 'Safety & Compliance', icon: '🔐' },
-    { id: 'setup', label: 'Setup & Usage', icon: '⚙️' },
-    { id: 'results', label: 'Results', icon: '📈' },
-    { id: 'pricing', label: 'Pricing & Trust', icon: '💼' },
+    { id: 'general', label: 'General' },
+    { id: 'ai', label: 'AI & Strategy' },
+    { id: 'safety', label: 'Safety & Compliance' },
+    { id: 'setup', label: 'Setup & Usage' },
+    { id: 'results', label: 'Results' },
+    { id: 'pricing', label: 'Pricing & Trust' },
 ] as const;
 
 const faqs: FaqItem[] = [
     /* General */
     { category: 'general', question: 'What is Job Jarvis?', answer: 'Job Jarvis is an AI-powered platform that analyzes your profile, builds a job search strategy, and runs job applications, recruiter outreach, and referral campaigns for you at scale.' },
     { category: 'general', question: 'Who is Job Jarvis for?', answer: 'Job Jarvis is built for job seekers, recruiters, and staffing teams who want to apply faster, cover more opportunities, and increase interview chances without manual work.' },
-    { category: 'general', question: 'How is this different from applying manually or through a staffing company?', answer: 'Manual applying is slow and inconsistent. Most staffing companies apply to a limited number of roles per day. Job Jarvis systematically searches, matches, and applies across multiple sources at scale — consistently and strategically.' },
+    { category: 'general', question: 'How is this different from applying manually or through a staffing company?', answer: 'Manual applying is slow and inconsistent. Most staffing companies apply to a limited number of roles per day. Job Jarvis systematically searches, matches, and applies across multiple sources at scale.' },
     { category: 'general', question: 'What exactly does Job Jarvis automate?', answer: 'It automates job discovery, role matching, application submission, recruiter outreach, referral workflows, and basic profile optimization.' },
-    { category: 'general', question: 'Does Job Jarvis just spam applications?', answer: 'No. Job Jarvis matches your profile to roles, filters irrelevant jobs, and applies based on fit and strategy — not random blasting.' },
+    { category: 'general', question: 'Does Job Jarvis just spam applications?', answer: 'No. Job Jarvis matches your profile to roles, filters irrelevant jobs, and applies based on fit and strategy and not just random blasting.' },
     /* AI & Strategy */
     { category: 'ai', question: 'How does Job Jarvis decide which jobs to apply to?', answer: 'It analyzes your resume, skills, experience, and preferences, then matches you to roles based on relevance, keywords, seniority, and hiring signals.' },
     { category: 'ai', question: 'Can I control what kinds of jobs it applies to?', answer: 'Yes. You can set role types, locations, keywords, experience level, companies to avoid, and other filters.' },
     { category: 'ai', question: 'Does it customize my resume or profile?', answer: 'Job Jarvis optimizes and adapts your profile for better matching and ATS visibility. (Customization level depends on your plan/setup.)' },
-    { category: 'ai', question: 'Will this improve my chances of getting interviews?', answer: 'Job Jarvis increases your surface area (more relevant applications + outreach) and improves consistency — both of which statistically improve interview chances. No tool can guarantee a job, but this improves the odds.' },
+    { category: 'ai', question: 'Will this improve my chances of getting interviews?', answer: 'Job Jarvis increases your surface area (more relevant applications + outreach) and improves consistency , both of which statistically improve interview chances. No tool can guarantee a job, but this improves the odds.' },
     /* Safety & Compliance */
     { category: 'safety', question: 'Is this safe to use?', answer: 'Yes. Job Jarvis is designed to follow platform rules, avoid risky automation patterns, and prioritize safe, compliant workflows.' },
     { category: 'safety', question: 'Will this get my accounts banned?', answer: 'Job Jarvis avoids aggressive or spammy behavior patterns. However, platform rules change, so we focus on safe, human-like, and compliant usage.' },
@@ -125,8 +125,8 @@ const faqs: FaqItem[] = [
     /* Pricing & Trust */
     { category: 'pricing', question: 'Is there a trial or demo?', answer: 'No.' },
     { category: 'pricing', question: 'Is this for individuals or companies?', answer: 'Both. Job Jarvis works for individual job seekers and for recruiters/staffing teams.' },
-    { category: 'pricing', question: 'Why did you build Job Jarvis?', answer: 'Because job search and recruiting are full of repetitive, manual, low-value work. Job Jarvis was built so humans can focus on strategy and interviews — not copy-paste.' },
-    { category: 'pricing', question: 'Is Job Jarvis just another "auto apply" tool?', answer: 'No. It\'s a full job search execution system: strategy, matching, applications, outreach, and tracking — not just clicking "apply".' },
+    { category: 'pricing', question: 'Why did you build Job Jarvis?', answer: 'Because job search and recruiting are full of repetitive, manual, low-value work. Job Jarvis was built so humans can focus on strategy and interviews.' },
+    { category: 'pricing', question: 'Is Job Jarvis just another "auto apply" tool?', answer: 'No. It\'s a full job search execution system: strategy, matching, applications, outreach, and tracking and by not just clicking "apply".' },
 ];
 
 /* ─── Slide navigation helpers ─── */

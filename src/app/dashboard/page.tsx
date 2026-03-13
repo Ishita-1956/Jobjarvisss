@@ -48,17 +48,15 @@ function FloatingParticles() {
 }
 
 // ──────────────────────── GLASS INFO CARDS ────────────────────────
-// 3 cards on LEFT, 3 cards on RIGHT
+// 2 cards on LEFT (zig-zag), 2 cards on RIGHT (zig-zag)
 const leftCards = [
-    { text: 'Apply Jobs Faster', detail: 'Auto-applies to matching roles' },
-    { text: '12 Applied Today', detail: 'Applications sent successfully' },
-    { text: 'Optimize Job Search', detail: 'AI-powered resume tailoring' },
+    { text: 'Apply Jobs Faster', detail: 'Auto-applies to matching roles', offset: 20 },
+    { text: '12 Applied Today', detail: 'Applications sent successfully', offset: -15 },
 ];
 
 const rightCards = [
-    { text: 'Jarvis is Working', detail: 'Scanning 200+ job boards now' },
-    { text: "Someone's Hiring Right Now", detail: 'Jarvis already Applied for you.' },
-    { text: '96% Match Rate', detail: 'Skills aligned to market demand' },
+    { text: 'Jarvis is Working', detail: 'Scanning 200+ job boards now', offset: -15 },
+    { text: '96% Match Rate', detail: 'Skills aligned to market demand', offset: 20 },
 ];
 
 // ──────────────────────── STAT CARD ────────────────────────
@@ -93,20 +91,27 @@ function StatCard({ title, value, delay }: { title: string; value: number; delay
     );
 }
 
-// ──────────────────────── GLASS CARD COMPONENT ────────────────────────
-function GlassCard({ text, detail, delay }: { text: string; detail: string; delay: number }) {
+// ──────────────────────── GLASS CARD COMPONENT (ZIG-ZAG) ────────────────────────
+function GlassCard({ text, detail, delay, side, offset = 0 }: {
+    text: string; detail: string; delay: number;
+    side: 'left' | 'right'; offset?: number;
+}) {
+    const xStart = side === 'left' ? 60 : -60;
     return (
         <motion.div
-            initial={{ opacity: 0, scale: 0.8, x: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, scale: 0.6, x: xStart }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            exit={{ opacity: 0, scale: 0.6, x: xStart }}
+            transition={{ duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
+            style={{ transform: `translateY(${offset}px)` }}
         >
             <div className="relative">
+                {/* Connector line from reactor */}
+                <div className={`absolute top-1/2 -translate-y-1/2 w-6 h-[1px] bg-gradient-to-${side === 'left' ? 'l' : 'r'} from-cyan-400/30 to-transparent ${side === 'left' ? '-right-7' : '-left-7'}`} />
                 <div className="absolute -inset-0.5 bg-gradient-to-br from-cyan-500/20 via-transparent to-blue-500/20 rounded-xl blur-[2px]" />
-                <div className="relative bg-gradient-to-br from-cyan-950/60 via-slate-900/80 to-blue-950/60 backdrop-blur-2xl border border-cyan-400/20 rounded-xl px-3.5 py-3 shadow-[0_4px_24px_rgba(34,211,238,0.06)]">
-                    <p className="text-[11px] font-bold text-cyan-300 leading-tight mb-0.5">{text}</p>
-                    <p className="text-[9px] text-slate-400 leading-snug">{detail}</p>
+                <div className="relative bg-gradient-to-br from-cyan-950/60 via-slate-900/80 to-blue-950/60 backdrop-blur-2xl border border-cyan-400/20 rounded-xl px-3 py-2.5 shadow-[0_4px_24px_rgba(34,211,238,0.06)] w-[155px]">
+                    <p className="text-[10px] font-bold text-cyan-300 leading-tight mb-0.5">{text}</p>
+                    <p className="text-[8px] text-slate-400 leading-snug">{detail}</p>
                 </div>
             </div>
         </motion.div>
@@ -171,13 +176,15 @@ export default function DashboardPage() {
                     className="relative py-4 sm:py-6"
                 >
                     {/* Horizontal layout: LEFT cards | REACTOR | RIGHT cards */}
-                    <div className="flex items-center justify-center gap-4 sm:gap-6">
+                    <div className="flex items-center justify-center gap-8 sm:gap-12">
 
-                        {/* LEFT GLASS CARDS */}
-                        <div className="hidden sm:flex flex-col gap-3 w-[170px] flex-shrink-0">
+                        {/* LEFT GLASS CARDS — zig-zag */}
+                        <div className="hidden sm:flex flex-col gap-6 w-[155px] flex-shrink-0 items-end">
                             <AnimatePresence>
                                 {isActive && leftCards.map((card, i) => (
-                                    <GlassCard key={card.text} text={card.text} detail={card.detail} delay={i * 0.1} />
+                                    <div key={card.text} style={{ marginRight: i % 2 === 0 ? '0px' : '28px' }}>
+                                        <GlassCard text={card.text} detail={card.detail} delay={0.1 + i * 0.15} side="left" offset={card.offset} />
+                                    </div>
                                 ))}
                             </AnimatePresence>
                         </div>
@@ -301,11 +308,13 @@ export default function DashboardPage() {
                             </div>
                         </div>
 
-                        {/* RIGHT GLASS CARDS */}
-                        <div className="hidden sm:flex flex-col gap-3 w-[170px] flex-shrink-0">
+                        {/* RIGHT GLASS CARDS — zig-zag */}
+                        <div className="hidden sm:flex flex-col gap-6 w-[155px] flex-shrink-0 items-start">
                             <AnimatePresence>
                                 {isActive && rightCards.map((card, i) => (
-                                    <GlassCard key={card.text} text={card.text} detail={card.detail} delay={0.3 + i * 0.1} />
+                                    <div key={card.text} style={{ marginLeft: i % 2 === 0 ? '0px' : '28px' }}>
+                                        <GlassCard text={card.text} detail={card.detail} delay={0.25 + i * 0.15} side="right" offset={card.offset} />
+                                    </div>
                                 ))}
                             </AnimatePresence>
                         </div>
@@ -315,7 +324,7 @@ export default function DashboardPage() {
                     <div className="sm:hidden mt-4 grid grid-cols-2 gap-2 px-2">
                         <AnimatePresence>
                             {isActive && [...leftCards, ...rightCards].map((card, i) => (
-                                <GlassCard key={card.text} text={card.text} detail={card.detail} delay={i * 0.08} />
+                                <GlassCard key={card.text} text={card.text} detail={card.detail} delay={i * 0.08} side={i < 2 ? 'left' : 'right'} />
                             ))}
                         </AnimatePresence>
                     </div>
